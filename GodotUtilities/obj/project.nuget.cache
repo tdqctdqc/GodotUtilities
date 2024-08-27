@@ -1,0 +1,68 @@
+{
+  "version": 2,
+  "dgSpecHash": "ORdNbFV3GEu6eVL6E1ifdwKM63LQxJjVPaGMfUXrJfldd8Ot7wntCmjpskhspB8W6roSSrO9ElrMej6nSnbjTQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Me\\Desktop\\games\\GodotUtilities\\GodotUtilities\\GodotUtilities.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Me\\.nuget\\packages\\dynamicimage\\3.1.1\\dynamicimage.3.1.1.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\godotsharp\\4.4.0-dev.1\\godotsharp.4.4.0-dev.1.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\godotsharp.sourcegenerators\\2.4.0\\godotsharp.sourcegenerators.2.4.0.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\godotsharpeditor\\4.4.0-dev.1\\godotsharpeditor.4.4.0-dev.1.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\google.ortools\\9.10.4067\\google.ortools.9.10.4067.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\google.ortools.runtime.linux-arm64\\9.10.4067\\google.ortools.runtime.linux-arm64.9.10.4067.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\google.ortools.runtime.linux-x64\\9.10.4067\\google.ortools.runtime.linux-x64.9.10.4067.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\google.ortools.runtime.osx-arm64\\9.10.4067\\google.ortools.runtime.osx-arm64.9.10.4067.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\google.ortools.runtime.osx-x64\\9.10.4067\\google.ortools.runtime.osx-x64.9.10.4067.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\google.ortools.runtime.win-x64\\9.10.4067\\google.ortools.runtime.win-x64.9.10.4067.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\google.protobuf\\3.26.1\\google.protobuf.3.26.1.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\messagepack\\3.0.134-beta\\messagepack.3.0.134-beta.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\messagepack.annotations\\3.0.134-beta\\messagepack.annotations.3.0.134-beta.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\messagepackanalyzer\\3.0.134-beta\\messagepackanalyzer.3.0.134-beta.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\microsoft.net.stringtools\\17.10.4\\microsoft.net.stringtools.17.10.4.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\microsoft.web.infrastructure\\1.0.0\\microsoft.web.infrastructure.1.0.0.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\poly2tri\\1.0.1\\poly2tri.1.0.1.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\webactivatorex\\2.0.2\\webactivatorex.2.0.2.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'DynamicImage 3.1.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "DynamicImage",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.Web.Infrastructure",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Poly2Tri 1.0.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Poly2Tri",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'WebActivatorEx 2.0.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "WebActivatorEx",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
+}

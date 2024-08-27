@@ -1,0 +1,678 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "DynamicImage/3.1.1": {
+        "type": "package",
+        "dependencies": {
+          "WebActivatorEx": "2.0.2"
+        },
+        "compile": {
+          "lib/net40/SoundInTheory.DynamicImage.dll": {}
+        },
+        "runtime": {
+          "lib/net40/SoundInTheory.DynamicImage.dll": {}
+        }
+      },
+      "GodotSharp/4.4.0-dev.1": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/GodotSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/GodotSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "GodotSharp.SourceGenerators/2.4.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/GodotSharp.SourceGenerators.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/GodotSharp.SourceGenerators.dll": {}
+        },
+        "build": {
+          "build/GodotSharp.SourceGenerators.targets": {}
+        }
+      },
+      "GodotSharpEditor/4.4.0-dev.1": {
+        "type": "package",
+        "dependencies": {
+          "GodotSharp": "4.4.0-dev.1"
+        },
+        "compile": {
+          "lib/net6.0/GodotSharpEditor.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/GodotSharpEditor.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.OrTools/9.10.4067": {
+        "type": "package",
+        "dependencies": {
+          "Google.OrTools.runtime.linux-arm64": "9.10.4067",
+          "Google.OrTools.runtime.linux-x64": "9.10.4067",
+          "Google.OrTools.runtime.osx-arm64": "9.10.4067",
+          "Google.OrTools.runtime.osx-x64": "9.10.4067",
+          "Google.OrTools.runtime.win-x64": "9.10.4067",
+          "Google.Protobuf": "3.26.1"
+        },
+        "compile": {
+          "lib/net6.0/Google.OrTools.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.OrTools.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.OrTools.runtime.linux-arm64/9.10.4067": {
+        "type": "package",
+        "runtimeTargets": {
+          "runtimes/linux-arm64/native/google-ortools-native.so": {
+            "assetType": "native",
+            "rid": "linux-arm64"
+          },
+          "runtimes/linux-arm64/native/libortools.so.9": {
+            "assetType": "native",
+            "rid": "linux-arm64"
+          }
+        }
+      },
+      "Google.OrTools.runtime.linux-x64/9.10.4067": {
+        "type": "package",
+        "runtimeTargets": {
+          "runtimes/linux-x64/native/google-ortools-native.so": {
+            "assetType": "native",
+            "rid": "linux-x64"
+          },
+          "runtimes/linux-x64/native/libortools.so.9": {
+            "assetType": "native",
+            "rid": "linux-x64"
+          }
+        }
+      },
+      "Google.OrTools.runtime.osx-arm64/9.10.4067": {
+        "type": "package",
+        "runtimeTargets": {
+          "runtimes/osx-arm64/native/google-ortools-native.dylib": {
+            "assetType": "native",
+            "rid": "osx-arm64"
+          },
+          "runtimes/osx-arm64/native/libortools.9.dylib": {
+            "assetType": "native",
+            "rid": "osx-arm64"
+          }
+        }
+      },
+      "Google.OrTools.runtime.osx-x64/9.10.4067": {
+        "type": "package",
+        "runtimeTargets": {
+          "runtimes/osx-x64/native/google-ortools-native.dylib": {
+            "assetType": "native",
+            "rid": "osx-x64"
+          },
+          "runtimes/osx-x64/native/libortools.9.dylib": {
+            "assetType": "native",
+            "rid": "osx-x64"
+          }
+        }
+      },
+      "Google.OrTools.runtime.win-x64/9.10.4067": {
+        "type": "package",
+        "runtimeTargets": {
+          "runtimes/win-x64/native/google-ortools-native.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          }
+        }
+      },
+      "Google.Protobuf/3.26.1": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/Google.Protobuf.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net5.0/Google.Protobuf.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "MessagePack/3.0.134-beta": {
+        "type": "package",
+        "dependencies": {
+          "MessagePack.Annotations": "3.0.134-beta",
+          "MessagePackAnalyzer": "3.0.134-beta",
+          "Microsoft.NET.StringTools": "17.10.4"
+        },
+        "compile": {
+          "lib/net8.0/MessagePack.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/MessagePack.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "MessagePack.Annotations/3.0.134-beta": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/MessagePack.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/MessagePack.Annotations.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "MessagePackAnalyzer/3.0.134-beta": {
+        "type": "package",
+        "build": {
+          "build/MessagePackAnalyzer.targets": {}
+        }
+      },
+      "Microsoft.NET.StringTools/17.10.4": {
+        "type": "package",
+        "compile": {
+          "ref/net8.0/_._": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.NET.StringTools.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      },
+      "Poly2Tri/1.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net35-Client/Poly2Tri.dll": {}
+        },
+        "runtime": {
+          "lib/net35-Client/Poly2Tri.dll": {}
+        }
+      },
+      "WebActivatorEx/2.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "compile": {
+          "lib/net40/WebActivatorEx.dll": {}
+        },
+        "runtime": {
+          "lib/net40/WebActivatorEx.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DynamicImage/3.1.1": {
+      "sha512": "q6XNf72G/8p8aG1j7CbyOcOs4naKb+URvC9rA0hA/Ub+xestPoRVOrhJZi/Dx5Vgh2a37NLp3FfCjThsM9ztuQ==",
+      "type": "package",
+      "path": "dynamicimage/3.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/App_Start/DynamicImage.cs.pp",
+        "dynamicimage.3.1.1.nupkg.sha512",
+        "dynamicimage.nuspec",
+        "lib/net40/SoundInTheory.DynamicImage.dll"
+      ]
+    },
+    "GodotSharp/4.4.0-dev.1": {
+      "sha512": "uZQ6hEnw8alGQgCIsPX4eJ7S9UdsYF6YZ9fCejx2AvwQZFw0SqJRMiPraxZuhc+IAqk5hS2xB3j/Ne+4r6ag0A==",
+      "type": "package",
+      "path": "godotsharp/4.4.0-dev.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "godotsharp.4.4.0-dev.1.nupkg.sha512",
+        "godotsharp.nuspec",
+        "lib/net6.0/GodotSharp.dll",
+        "lib/net6.0/GodotSharp.xml"
+      ]
+    },
+    "GodotSharp.SourceGenerators/2.4.0": {
+      "sha512": "JCykcLWA7/pk/pk28VXqDGiPqw6phQ3JOQ1/9I4tjTy/PNlTTe2nZ6hDPnYBPLOdDESa5JU1J6ZXkvqex+x3nQ==",
+      "type": "package",
+      "path": "godotsharp.sourcegenerators/2.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "analyzers/dotnet/cs/GodotSharp.SourceGenerators.dll",
+        "build/GodotSharp.SourceGenerators.targets",
+        "godotsharp.sourcegenerators.2.4.0.nupkg.sha512",
+        "godotsharp.sourcegenerators.nuspec",
+        "lib/netstandard2.0/GodotSharp.SourceGenerators.dll"
+      ]
+    },
+    "GodotSharpEditor/4.4.0-dev.1": {
+      "sha512": "3SlAYAVfQt6GcqZDsTI+ULuI8VE9tXNrK35qgsE8uiDWQ+w7p2Ymo+oL9T928Jhu3B2TrEoakOz0tlUDD6eWrQ==",
+      "type": "package",
+      "path": "godotsharpeditor/4.4.0-dev.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "godotsharpeditor.4.4.0-dev.1.nupkg.sha512",
+        "godotsharpeditor.nuspec",
+        "lib/net6.0/GodotSharpEditor.dll",
+        "lib/net6.0/GodotSharpEditor.xml"
+      ]
+    },
+    "Google.OrTools/9.10.4067": {
+      "sha512": "b4F5bO1tLszgd6JHng4zgNBbzLYs3wdZTCqT4xUc50xnOUz6k+qCX7k9H1Q2kK858KIjLSnXWLp2hC9nbz2sTw==",
+      "type": "package",
+      "path": "google.ortools/9.10.4067",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/README.md",
+        "content/algorithms/set_cover.proto",
+        "content/bop/bop_parameters.proto",
+        "content/constraint_solver/assignment.proto",
+        "content/constraint_solver/demon_profiler.proto",
+        "content/constraint_solver/routing_enums.proto",
+        "content/constraint_solver/routing_ils.proto",
+        "content/constraint_solver/routing_parameters.proto",
+        "content/constraint_solver/search_limit.proto",
+        "content/constraint_solver/search_stats.proto",
+        "content/constraint_solver/solver_parameters.proto",
+        "content/glop/parameters.proto",
+        "content/graph/flow_problem.proto",
+        "content/linear_solver/linear_solver.proto",
+        "content/orLogo.png",
+        "content/pdlp/solve_log.proto",
+        "content/pdlp/solvers.proto",
+        "content/sat/boolean_problem.proto",
+        "content/sat/cp_model.proto",
+        "content/sat/cp_model_service.proto",
+        "content/sat/sat_parameters.proto",
+        "content/util/int128.proto",
+        "content/util/optional_boolean.proto",
+        "google.ortools.9.10.4067.nupkg.sha512",
+        "google.ortools.nuspec",
+        "lib/net462/Google.OrTools.dll",
+        "lib/net462/Google.OrTools.xml",
+        "lib/net6.0/Google.OrTools.dll",
+        "lib/net6.0/Google.OrTools.xml"
+      ]
+    },
+    "Google.OrTools.runtime.linux-arm64/9.10.4067": {
+      "sha512": "vzly0LTe1rPes/YyG1slx7fu4MvRNxQ2RseTOXA9AOjbYM5w1mGllknjfR6iIdx4GpuROkRlDA2fLD+47KJGvw==",
+      "type": "package",
+      "path": "google.ortools.runtime.linux-arm64/9.10.4067",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/README.md",
+        "content/orLogo.png",
+        "google.ortools.runtime.linux-arm64.9.10.4067.nupkg.sha512",
+        "google.ortools.runtime.linux-arm64.nuspec",
+        "runtimes/linux-arm64/native/google-ortools-native.so",
+        "runtimes/linux-arm64/native/libortools.so.9"
+      ]
+    },
+    "Google.OrTools.runtime.linux-x64/9.10.4067": {
+      "sha512": "8J+/Mai5dESMbU4MjwwEOKj19RjZJydOUam0qnvLXwZ2tUhsJHQK58e2VbLuWQDzycUIEODFy8Px8d2Qj2a+4g==",
+      "type": "package",
+      "path": "google.ortools.runtime.linux-x64/9.10.4067",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/README.md",
+        "content/orLogo.png",
+        "google.ortools.runtime.linux-x64.9.10.4067.nupkg.sha512",
+        "google.ortools.runtime.linux-x64.nuspec",
+        "runtimes/linux-x64/native/google-ortools-native.so",
+        "runtimes/linux-x64/native/libortools.so.9"
+      ]
+    },
+    "Google.OrTools.runtime.osx-arm64/9.10.4067": {
+      "sha512": "yiowB0Uegefhvcsu61v6DX5qKBnedlblKQOOzWqiO2GhQ44jZR2NjyFiIMUSeX0dxU2JnCuwDVFlAGWa4D8W6g==",
+      "type": "package",
+      "path": "google.ortools.runtime.osx-arm64/9.10.4067",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/README.md",
+        "content/orLogo.png",
+        "google.ortools.runtime.osx-arm64.9.10.4067.nupkg.sha512",
+        "google.ortools.runtime.osx-arm64.nuspec",
+        "runtimes/osx-arm64/native/google-ortools-native.dylib",
+        "runtimes/osx-arm64/native/libortools.9.dylib"
+      ]
+    },
+    "Google.OrTools.runtime.osx-x64/9.10.4067": {
+      "sha512": "r2jZzYJ98SIJ3Mbq+0HapuyEaMmddnV87Q0mIX0f5R06OWOi78wneiUyWXPeYHJMtzC/iQYGpkEQIZOX4hXuSA==",
+      "type": "package",
+      "path": "google.ortools.runtime.osx-x64/9.10.4067",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/README.md",
+        "content/orLogo.png",
+        "google.ortools.runtime.osx-x64.9.10.4067.nupkg.sha512",
+        "google.ortools.runtime.osx-x64.nuspec",
+        "runtimes/osx-x64/native/google-ortools-native.dylib",
+        "runtimes/osx-x64/native/libortools.9.dylib"
+      ]
+    },
+    "Google.OrTools.runtime.win-x64/9.10.4067": {
+      "sha512": "Lj/3OWN5b24CoPJGGvJAY+pPL6sGUWJDpYglq83/dcHitVIYm8qFcR8v8mqiheeYztZVA102yRIOAh2sUZ4eEg==",
+      "type": "package",
+      "path": "google.ortools.runtime.win-x64/9.10.4067",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/README.md",
+        "content/orLogo.png",
+        "google.ortools.runtime.win-x64.9.10.4067.nupkg.sha512",
+        "google.ortools.runtime.win-x64.nuspec",
+        "runtimes/win-x64/native/google-ortools-native.dll"
+      ]
+    },
+    "Google.Protobuf/3.26.1": {
+      "sha512": "CHZX8zXqhF/fdUtd+AYzew8T2HFkAoe5c7lbGxZY/qryAlQXckDvM5BfOJjXlMS7kyICqQTMszj4w1bX5uBJ/w==",
+      "type": "package",
+      "path": "google.protobuf/3.26.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "google.protobuf.3.26.1.nupkg.sha512",
+        "google.protobuf.nuspec",
+        "lib/net45/Google.Protobuf.dll",
+        "lib/net45/Google.Protobuf.pdb",
+        "lib/net45/Google.Protobuf.xml",
+        "lib/net5.0/Google.Protobuf.dll",
+        "lib/net5.0/Google.Protobuf.pdb",
+        "lib/net5.0/Google.Protobuf.xml",
+        "lib/netstandard1.1/Google.Protobuf.dll",
+        "lib/netstandard1.1/Google.Protobuf.pdb",
+        "lib/netstandard1.1/Google.Protobuf.xml",
+        "lib/netstandard2.0/Google.Protobuf.dll",
+        "lib/netstandard2.0/Google.Protobuf.pdb",
+        "lib/netstandard2.0/Google.Protobuf.xml"
+      ]
+    },
+    "MessagePack/3.0.134-beta": {
+      "sha512": "73Qn5uksLd2BgvDQXxHNEmKCsv/4CohFYtVtRjX28+uVtMZAltvydVBmzwEa9qdLjT2GCDZwFfTgRcAsb7xbFA==",
+      "type": "package",
+      "path": "messagepack/3.0.134-beta",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net472/MessagePack.dll",
+        "lib/net472/MessagePack.xml",
+        "lib/net6.0/MessagePack.dll",
+        "lib/net6.0/MessagePack.xml",
+        "lib/net8.0/MessagePack.dll",
+        "lib/net8.0/MessagePack.xml",
+        "lib/netstandard2.0/MessagePack.dll",
+        "lib/netstandard2.0/MessagePack.xml",
+        "lib/netstandard2.1/MessagePack.dll",
+        "lib/netstandard2.1/MessagePack.xml",
+        "messagepack.3.0.134-beta.nupkg.sha512",
+        "messagepack.nuspec"
+      ]
+    },
+    "MessagePack.Annotations/3.0.134-beta": {
+      "sha512": "/h+11bLUthdKob0WEJCXLuqPHy7ndplPz99S97GHk+bW2ll9I8ptzC2cuRtbkOeJ16zBUSHveSRXRVeZoadwCg==",
+      "type": "package",
+      "path": "messagepack.annotations/3.0.134-beta",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/MessagePack.Annotations.dll",
+        "lib/netstandard2.0/MessagePack.Annotations.xml",
+        "messagepack.annotations.3.0.134-beta.nupkg.sha512",
+        "messagepack.annotations.nuspec"
+      ]
+    },
+    "MessagePackAnalyzer/3.0.134-beta": {
+      "sha512": "bWkN0Ro6aamLtby1leBBW3TOq9vKbUxfrcXYqmmefxzFHs/grF644avNtFbx+qtiMXH7xllta3S4ms8r6ktWCg==",
+      "type": "package",
+      "path": "messagepackanalyzer/3.0.134-beta",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/roslyn4.3/cs/MessagePack.Analyzers.CodeFixes.dll",
+        "analyzers/roslyn4.3/cs/MessagePack.SourceGenerator.dll",
+        "build/MessagePackAnalyzer.targets",
+        "messagepackanalyzer.3.0.134-beta.nupkg.sha512",
+        "messagepackanalyzer.nuspec"
+      ]
+    },
+    "Microsoft.NET.StringTools/17.10.4": {
+      "sha512": "wyABaqY+IHCMMSTQmcc3Ca6vbmg5BaEPgicnEgpll+4xyWZWlkQqUwafweUd9VAhBb4jqplMl6voUHQ6yfdUcg==",
+      "type": "package",
+      "path": "microsoft.net.stringtools/17.10.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "MSBuild-NuGet-Icon.png",
+        "README.md",
+        "lib/net472/Microsoft.NET.StringTools.dll",
+        "lib/net472/Microsoft.NET.StringTools.pdb",
+        "lib/net472/Microsoft.NET.StringTools.xml",
+        "lib/net8.0/Microsoft.NET.StringTools.dll",
+        "lib/net8.0/Microsoft.NET.StringTools.pdb",
+        "lib/net8.0/Microsoft.NET.StringTools.xml",
+        "lib/netstandard2.0/Microsoft.NET.StringTools.dll",
+        "lib/netstandard2.0/Microsoft.NET.StringTools.pdb",
+        "lib/netstandard2.0/Microsoft.NET.StringTools.xml",
+        "microsoft.net.stringtools.17.10.4.nupkg.sha512",
+        "microsoft.net.stringtools.nuspec",
+        "notices/THIRDPARTYNOTICES.txt",
+        "ref/net472/Microsoft.NET.StringTools.dll",
+        "ref/net472/Microsoft.NET.StringTools.xml",
+        "ref/net8.0/Microsoft.NET.StringTools.dll",
+        "ref/net8.0/Microsoft.NET.StringTools.xml",
+        "ref/netstandard2.0/Microsoft.NET.StringTools.dll",
+        "ref/netstandard2.0/Microsoft.NET.StringTools.xml"
+      ]
+    },
+    "Microsoft.Web.Infrastructure/1.0.0": {
+      "sha512": "FNmvLn5m2LTU/Rs2KWVo0SIIh9Ek+U0ojex7xeDaSHw/zgEP77A8vY5cVWgUtBGS8MJfDGNn8rpXJWEIQaPwTg==",
+      "type": "package",
+      "path": "microsoft.web.infrastructure/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/Microsoft.Web.Infrastructure.dll",
+        "microsoft.web.infrastructure.1.0.0.nupkg.sha512",
+        "microsoft.web.infrastructure.nuspec"
+      ]
+    },
+    "Poly2Tri/1.0.1": {
+      "sha512": "+/V/DLKkJov+Lc83QE2aRAMqxl+cE6sjhMZ1kdfj1l7B/r0fPcBeLj5uU4sxrKkZVVN+j4JUNf6e2xW5vrhwqQ==",
+      "type": "package",
+      "path": "poly2tri/1.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35-Client/Poly2Tri.dll",
+        "poly2tri.1.0.1.nupkg.sha512",
+        "poly2tri.nuspec"
+      ]
+    },
+    "WebActivatorEx/2.0.2": {
+      "sha512": "eVe2RmaNWYkgDvtWSthTLCv3zIQ6xcfxNLNPbCNe8IIiZcYet/A7tKG/HlyLdIz73wUvjyIDCmhK6wGODFtXlQ==",
+      "type": "package",
+      "path": "webactivatorex/2.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/WebActivatorEx.dll",
+        "webactivatorex.2.0.2.nupkg.sha512",
+        "webactivatorex.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "DynamicImage >= 3.1.1",
+      "GodotSharp >= 4.4.0-dev.1",
+      "GodotSharp.SourceGenerators >= 2.4.0",
+      "GodotSharpEditor >= 4.4.0-dev.1",
+      "Google.OrTools >= 9.10.4067",
+      "MessagePack >= 3.0.134-beta",
+      "Poly2Tri >= 1.0.1"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Me\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\Me\\Desktop\\games\\GodotUtilities\\GodotUtilities\\GodotUtilities.csproj",
+      "projectName": "GodotUtilities",
+      "projectPath": "C:\\Users\\Me\\Desktop\\games\\GodotUtilities\\GodotUtilities\\GodotUtilities.csproj",
+      "packagesPath": "C:\\Users\\Me\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Me\\Desktop\\games\\GodotUtilities\\GodotUtilities\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Me\\AppData\\Roaming\\NuGet\\NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "dependencies": {
+          "DynamicImage": {
+            "target": "Package",
+            "version": "[3.1.1, )"
+          },
+          "GodotSharp": {
+            "target": "Package",
+            "version": "[4.4.0-dev.1, )"
+          },
+          "GodotSharp.SourceGenerators": {
+            "target": "Package",
+            "version": "[2.4.0, )"
+          },
+          "GodotSharpEditor": {
+            "target": "Package",
+            "version": "[4.4.0-dev.1, )"
+          },
+          "Google.OrTools": {
+            "target": "Package",
+            "version": "[9.10.4067, )"
+          },
+          "MessagePack": {
+            "target": "Package",
+            "version": "[3.0.134-beta, )"
+          },
+          "Poly2Tri": {
+            "target": "Package",
+            "version": "[1.0.1, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'DynamicImage 3.1.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "DynamicImage",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.Web.Infrastructure",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Poly2Tri 1.0.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Poly2Tri",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'WebActivatorEx 2.0.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "WebActivatorEx",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
+}
