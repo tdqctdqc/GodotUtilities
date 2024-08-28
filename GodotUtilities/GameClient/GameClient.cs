@@ -19,7 +19,6 @@ public class GameClient : Node
     {
         UiTick = new RefAction();
         _uiTickTimer = new TimerAction(.1f, 0f, UiTick.Invoke);
-
         Callbacks = new ClientCallbacks();
         Components = new Dictionary<Type, IClientComponent>();
         QueuedUpdates = new ConcurrentQueue<Action>();

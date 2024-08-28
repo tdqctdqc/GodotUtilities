@@ -14,7 +14,7 @@
           "lib/net40/SoundInTheory.DynamicImage.dll": {}
         }
       },
-      "GodotSharp/4.4.0-dev.1": {
+      "GodotSharp/4.3.0": {
         "type": "package",
         "compile": {
           "lib/net6.0/GodotSharp.dll": {
@@ -37,22 +37,6 @@
         },
         "build": {
           "build/GodotSharp.SourceGenerators.targets": {}
-        }
-      },
-      "GodotSharpEditor/4.4.0-dev.1": {
-        "type": "package",
-        "dependencies": {
-          "GodotSharp": "4.4.0-dev.1"
-        },
-        "compile": {
-          "lib/net6.0/GodotSharpEditor.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net6.0/GodotSharpEditor.dll": {
-            "related": ".xml"
-          }
         }
       },
       "Google.OrTools/9.10.4067": {
@@ -246,14 +230,14 @@
         "lib/net40/SoundInTheory.DynamicImage.dll"
       ]
     },
-    "GodotSharp/4.4.0-dev.1": {
-      "sha512": "uZQ6hEnw8alGQgCIsPX4eJ7S9UdsYF6YZ9fCejx2AvwQZFw0SqJRMiPraxZuhc+IAqk5hS2xB3j/Ne+4r6ag0A==",
+    "GodotSharp/4.3.0": {
+      "sha512": "mEwRmNIG2k/yPfkFencEkNVXpHCa+uETHkIQcq0MxcsfwJQZ4HueFU5Q9CYDIdd5YrRPqjwuyxbsuD6Je8lfdQ==",
       "type": "package",
-      "path": "godotsharp/4.4.0-dev.1",
+      "path": "godotsharp/4.3.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "godotsharp.4.4.0-dev.1.nupkg.sha512",
+        "godotsharp.4.3.0.nupkg.sha512",
         "godotsharp.nuspec",
         "lib/net6.0/GodotSharp.dll",
         "lib/net6.0/GodotSharp.xml"
@@ -272,19 +256,6 @@
         "godotsharp.sourcegenerators.2.4.0.nupkg.sha512",
         "godotsharp.sourcegenerators.nuspec",
         "lib/netstandard2.0/GodotSharp.SourceGenerators.dll"
-      ]
-    },
-    "GodotSharpEditor/4.4.0-dev.1": {
-      "sha512": "3SlAYAVfQt6GcqZDsTI+ULuI8VE9tXNrK35qgsE8uiDWQ+w7p2Ymo+oL9T928Jhu3B2TrEoakOz0tlUDD6eWrQ==",
-      "type": "package",
-      "path": "godotsharpeditor/4.4.0-dev.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "godotsharpeditor.4.4.0-dev.1.nupkg.sha512",
-        "godotsharpeditor.nuspec",
-        "lib/net6.0/GodotSharpEditor.dll",
-        "lib/net6.0/GodotSharpEditor.xml"
       ]
     },
     "Google.OrTools/9.10.4067": {
@@ -539,9 +510,8 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "DynamicImage >= 3.1.1",
-      "GodotSharp >= 4.4.0-dev.1",
+      "GodotSharp >= 4.3.0",
       "GodotSharp.SourceGenerators >= 2.4.0",
-      "GodotSharpEditor >= 4.4.0-dev.1",
       "Google.OrTools >= 9.10.4067",
       "MessagePack >= 3.0.134-beta",
       "Poly2Tri >= 1.0.1"
@@ -578,6 +548,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -590,15 +565,11 @@
           },
           "GodotSharp": {
             "target": "Package",
-            "version": "[4.4.0-dev.1, )"
+            "version": "[4.3.0, )"
           },
           "GodotSharp.SourceGenerators": {
             "target": "Package",
             "version": "[2.4.0, )"
-          },
-          "GodotSharpEditor": {
-            "target": "Package",
-            "version": "[4.4.0-dev.1, )"
           },
           "Google.OrTools": {
             "target": "Package",

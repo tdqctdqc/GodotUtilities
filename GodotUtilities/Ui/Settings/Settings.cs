@@ -1,3 +1,5 @@
+using Godot;
+
 namespace GodotUtilities.Ui;
 
 public class Settings : ISettings
@@ -11,4 +13,17 @@ public class Settings : ISettings
         Name = name;
         SettingsOptions = new List<ISettingsOption>();
     }
+
+    public Control GetControlInterface()
+    {
+        var box = new VBoxContainer();
+
+        foreach (var settingsOption in SettingsOptions)
+        {
+            box.AddChild(settingsOption.GetControlInterface());
+        }
+
+        return box;
+    }
+    
 }

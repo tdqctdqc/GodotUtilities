@@ -8,7 +8,7 @@ public class ListSettingsOption<T> : SettingsOption<T>
     private Dictionary<T, string> _names;
     public ListSettingsOption(string name, List<T> options, 
         List<string> names) 
-        : base(name, options.First())
+        : base(name, options.FirstOrDefault())
     {
         Options = options;
         _names = new Dictionary<T, string>();

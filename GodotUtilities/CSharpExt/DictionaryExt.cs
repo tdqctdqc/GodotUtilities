@@ -6,7 +6,6 @@ using Godot;
 
 public static class DictionaryExt
 {
-   
     public static bool AddOrUpdateRange<TKey, TValue, TCol>(this Dictionary<TKey, TCol> dic,
         TKey key, params TValue[] vals) where TCol : ICollection<TValue>, new()
     {

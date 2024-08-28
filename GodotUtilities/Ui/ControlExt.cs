@@ -19,6 +19,11 @@ public static class ControlExt
         c.AnchorsPreset = (int)Control.LayoutPreset.FullRect;
     }
 
+    public static void Center(this Control c)
+    {
+        c.AnchorsPreset = (int)Control.LayoutPreset.Center;
+    }
+
     public static void AddClickUpAction(this Control c, 
         MouseButton button,
         Action a)

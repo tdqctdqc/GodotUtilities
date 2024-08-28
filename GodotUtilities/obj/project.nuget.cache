@@ -1,13 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "ORdNbFV3GEu6eVL6E1ifdwKM63LQxJjVPaGMfUXrJfldd8Ot7wntCmjpskhspB8W6roSSrO9ElrMej6nSnbjTQ==",
+  "dgSpecHash": "MMqKoYliW6A=",
   "success": true,
   "projectFilePath": "C:\\Users\\Me\\Desktop\\games\\GodotUtilities\\GodotUtilities\\GodotUtilities.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Me\\.nuget\\packages\\dynamicimage\\3.1.1\\dynamicimage.3.1.1.nupkg.sha512",
-    "C:\\Users\\Me\\.nuget\\packages\\godotsharp\\4.4.0-dev.1\\godotsharp.4.4.0-dev.1.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\godotsharp\\4.3.0\\godotsharp.4.3.0.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\godotsharp.sourcegenerators\\2.4.0\\godotsharp.sourcegenerators.2.4.0.nupkg.sha512",
-    "C:\\Users\\Me\\.nuget\\packages\\godotsharpeditor\\4.4.0-dev.1\\godotsharpeditor.4.4.0-dev.1.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\google.ortools\\9.10.4067\\google.ortools.9.10.4067.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\google.ortools.runtime.linux-arm64\\9.10.4067\\google.ortools.runtime.linux-arm64.9.10.4067.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\google.ortools.runtime.linux-x64\\9.10.4067\\google.ortools.runtime.linux-x64.9.10.4067.nupkg.sha512",

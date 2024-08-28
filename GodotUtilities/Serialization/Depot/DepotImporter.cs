@@ -20,8 +20,8 @@ public class DepotImporter
 
     public DepotImporter(string path)
     {
-        string filePath = Directory.GetCurrentDirectory();
-        path = filePath + path;
+        // string filePath = Directory.GetCurrentDirectory();
+        path = "res://" + path;
         Sheets = new Dictionary<string, DepotSheet>();
         SheetsByGuid = new Dictionary<Guid, DepotSheet>();
         LinesByGuid = new Dictionary<Guid, JsonObject>();
@@ -64,7 +64,7 @@ public class DepotImporter
 
     public IEnumerable<T> MakeSheetObjectsModels<T>(
         IReadOnlyDictionary<string, object> models,
-        Func<T> defaultConstructor)
+        Func<string, T> defaultConstructor)
         where T : Model
     {
         var name = typeof(T).Name;
@@ -83,7 +83,6 @@ public class DepotImporter
                 new object[] { models, defaultConstructor });
             return null;
         }
-
         var sheet = Sheets[name];
         sheet.Type = typeof(T);
         return sheet.MakeObjectsModels<T>(models, 
@@ -223,23 +222,19 @@ public class DepotImporter
     {
         return JsonSerializer.Deserialize<int>(columnValue);
     }
-
     private static float UnpackFloat(JsonNode columnValue)
     {
         return JsonSerializer.Deserialize<float>(columnValue);
     }
-
     private object UnpackLineReference<TProperty>(JsonNode columnValue)
     {
         var refLineGuid = UnpackGuid(columnValue);
         return (TProperty)LineObjects[refLineGuid];
     }
-
     private static Guid UnpackGuid(JsonNode columnValue)
     {
         return JsonSerializer.Deserialize<Guid>(columnValue);
     }
-
     private TProperty UnpackList<TProperty>(JsonObject column,
         JsonArray value)
     {

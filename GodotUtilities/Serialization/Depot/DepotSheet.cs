@@ -51,7 +51,7 @@ public class DepotSheet
 
     public IEnumerable<T> MakeObjectsModels<T>(
         IReadOnlyDictionary<string, object> models, 
-        Func<T> defaultConstructor,
+        Func<string, T> defaultConstructor,
         DepotImporter importer)
         where T : Model
     {
@@ -71,11 +71,11 @@ public class DepotSheet
         foreach (var (name, line) in LinesByName)
         {
             if (models.ContainsKey(name)) continue;
-            var value = defaultConstructor();
+            var t = defaultConstructor(name);
             var guid = LineGuids[name];
-            importer.LineObjects[guid] = value;
-            importer.LineObjectsByName[name] = value;
-            yield return value;
+            importer.LineObjects[guid] = t;
+            importer.LineObjectsByName[name] = t;
+            yield return t;
         }
     }
 }

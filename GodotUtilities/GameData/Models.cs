@@ -8,16 +8,11 @@ public class Models
 {
     public Dictionary<string, Model> ModelsByName { get; private set; }
 
-    public Models(Dictionary<string, Model> modelsByName)
+    public Models()
     {
-        ModelsByName = modelsByName;
+        ModelsByName = new Dictionary<string, Model>();
     }
 
-    public void ImportFromDepot(string filePath)
-    {
-        var importer = new DepotImporter(filePath);
-        //for each model type do import
-    }
     private void AddModel(Model model)
     {
         ModelsByName.Add(model.Name, model);
@@ -32,40 +27,44 @@ public class Models
         return ModelsByName.Values.OfType<TModel>();
     }
     
-    private void ImportWithPredefsAllowDefault<T>(
-        List<T> predefs,
-        DepotImporter importer)
-        where T : Model, new()
-    {
-        ImportWithPredefs(predefs, () => new(), importer);
-    }
-    private void ImportWithPredefsDisallowDefault<T>(List<T> predefs,
+    public void ImportWithPredefsAllowDefault<T>(
+        Dictionary<string, T> predefs,
+        Func<string, T> defaultConstructor,
         DepotImporter importer)
         where T : Model
     {
-        ImportWithPredefs(predefs, () => throw new Exception(), importer);
+        ImportWithPredefs(predefs, defaultConstructor, importer);
+    }
+    public void ImportWithPredefsDisallowDefault<T>(Dictionary<string, T> predefs,
+        DepotImporter importer)
+        where T : Model
+    {
+        ImportWithPredefs(predefs, n => throw new Exception(), importer);
     }
     
-    private void ImportWithPredefs<T>(List<T> predefs,
-        Func<T> defaultConstructor,
+    private void ImportWithPredefs<T>(Dictionary<string, T> predefs,
+        Func<string, T> defaultConstructor,
         DepotImporter importer) 
         where T : Model
     {
-        var ms = predefs.GetPropertiesOfTypeByName<T>()
-            .ToDictionary(kvp => kvp.Key, kvp => (object)kvp.Value);
-        var models = importer.MakeSheetObjectsModels<T>(ms, defaultConstructor);
+        var ms = predefs
+            .ToDictionary(t => t.Key,
+                t => (object)t);
+        var models = importer
+            .MakeSheetObjectsModels<T>(ms, defaultConstructor);
         foreach (var model in models)
         {
             AddModel(model);
         }
     }
 
-    private void ImportNoPredefs<T>(DepotImporter importer)
+    public void ImportNoPredefs<T>(Func<string, T> defaultConstructor,
+        DepotImporter importer)
         where T : Model, new()
     {
         var models = importer
             .MakeSheetObjectsModels<T>(new Dictionary<string, object>(), 
-                () => new T());
+                defaultConstructor);
         foreach (var model in models)
         {
             AddModel(model);

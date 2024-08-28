@@ -1,5 +1,6 @@
 using GodotUtilities.DataStructures;
 using GodotUtilities.Serialization;
+using GodotUtilities.Serialization.Depot;
 
 namespace GodotUtilities.GameData;
 
@@ -10,40 +11,26 @@ public class Data
     public Models Models { get; private set; }
     public Serializer Serializer { get; private set; }
 
-    public static Data CreateForHost()
+    public static void SetupForHost(Data d, ModelImporter modelImporter)
     {
-        var models = new Models(new Dictionary<string, Model>());
-        models.ImportFromDepot("\\depot.dpo");
-        var serializer = new Serializer();
-        var d = new Data(new IdDispenser(0),
-            new Entities(new Dictionary<int, Entity>()),
-            models, serializer);
-        foreach (var (name, model) in models.ModelsByName)
+        modelImporter.SetupModels(d.Models);
+        foreach (var (name, model) in d.Models.ModelsByName)
         {
             model.MakeToken(d);
         }
-        return d;
     }
-
-    public static Data CreateForRemote()
+    public static void SetupForRemote(Data d, ModelImporter modelImporter)
     {
-        var models = new Models(new Dictionary<string, Model>());
-        models.ImportFromDepot("\\depot.dpo");
-        var serializer = new Serializer();
-        var d = new Data(null,
-            new Entities(new Dictionary<int, Entity>()),
-            models, serializer);
-        return d;
+        modelImporter.SetupModels(d.Models);
     }
-    public static Data Load(string path)
+    public static void SetupForLoad(Data d, string path, ModelImporter modelImporter)
     {
-        var models = new Models(new Dictionary<string, Model>());
-        models.ImportFromDepot("\\depot.dpo");
+        var models = new Models();
         var serializer = new Serializer();
         var saveFile = Loader<SaveFile>.Load(path, serializer);
-        var d = new Data(saveFile.IdDispenser,
-            saveFile.Entities, models, new Serializer());
-        return d;
+        d.IdDispenser = saveFile.IdDispenser;
+        d.Entities = saveFile.Entities;
+        modelImporter.SetupModels(models);
     }
 
     public Data(IdDispenser idDispenser, Entities entities, Models models, Serializer serializer)

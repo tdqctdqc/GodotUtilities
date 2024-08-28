@@ -32,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -44,15 +49,11 @@
             },
             "GodotSharp": {
               "target": "Package",
-              "version": "[4.4.0-dev.1, )"
+              "version": "[4.3.0, )"
             },
             "GodotSharp.SourceGenerators": {
               "target": "Package",
               "version": "[2.4.0, )"
-            },
-            "GodotSharpEditor": {
-              "target": "Package",
-              "version": "[4.4.0-dev.1, )"
             },
             "Google.OrTools": {
               "target": "Package",
