@@ -12,9 +12,7 @@ public static class HexExt
     public static Vector3I NorthWest {get; private set;} = new Vector3I(-1,1,0);
     
     public static List<Vector3I> HexDirs { get; private set; }
-        = new List<Vector3I>(){North, 
-            NorthEast, SouthEast, 
-            South, SouthWest, NorthWest};
+        = [ North, NorthEast, SouthEast, South, SouthWest, NorthWest ];
     
 
     public static IEnumerable<Vector3I> GetNeighbors(

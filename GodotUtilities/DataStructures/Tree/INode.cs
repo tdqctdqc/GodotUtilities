@@ -1,6 +1,6 @@
 namespace GodotUtilities.DataStructures.Tree;
 
-public interface IAggregateTreeNode<T>
+public interface INode<T> : INeighbored<INode<T>>
 {
     
 }

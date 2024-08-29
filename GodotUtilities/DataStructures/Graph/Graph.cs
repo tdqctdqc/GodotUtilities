@@ -133,7 +133,7 @@ public class Graph<TElement, TEdge> : IGraph<TElement, TEdge>
     public HashSet<TElement> GetNeighbors(TElement value)
     {
         //todo make igraphnode neighbors hashset?
-        return _nodeDic[value].Neighbors.ToHashSet();
+        return _nodeDic[value].Neighbors.EnumerableToHashSet();
     }
     public bool HasNode(TElement value)
     {

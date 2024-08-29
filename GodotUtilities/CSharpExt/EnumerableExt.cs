@@ -83,7 +83,7 @@ public static class EnumerableExt
         return enumerable.ElementAt(index);
     }
 
-    public static HashSet<T> ToHashSet<T>(this IEnumerable<T> enumerable)
+    public static HashSet<T> EnumerableToHashSet<T>(this IEnumerable<T> enumerable)
     {
         return new HashSet<T>(enumerable);
     }

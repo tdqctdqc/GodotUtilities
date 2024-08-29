@@ -12,8 +12,7 @@ public static class FloodFill<T>
         RandomNumberGenerator random)
     {
         var res = new HashSet<T> { seed };
-        var open = new HashSet<T>();
-        open.Add(seed);
+        var open = new HashSet<T> { seed };
         while (res.Count < limit)
         {
             if (open.Count == 0) break;
@@ -78,21 +77,21 @@ public static class FloodFill<T>
         Func<T, IEnumerable<T>> getNeighbors,
         Func<T, bool> valid)
     {
-        var list = new List<T>{ seed };
+        var last = new List<T> { seed };
         var res = new HashSet<T> { seed };
         var lastAddition = 1;
         for (var i = 0; i < radius; i++)
         {
             var thisAddition = 0;
-            var count = list.Count;
+            var count = last.Count;
             for (int j = count - lastAddition; j < count; j++)
             {
-                var t = list[j];
+                var t = last[j];
                 foreach (var n in getNeighbors(t))
                 {
                     if (res.Contains(n) == false && valid(n))
                     {
-                        list.Add(n);
+                        last.Add(n);
                         res.Add(n);
                         thisAddition++;
                     }
@@ -200,8 +199,8 @@ public static class FloodFill<T>
         IEnumerable<T> need,
         int maxIter = 1_000)
     {
-        var res = starts.ToHashSet();
-        var unencountered = need.ToHashSet();
+        var res = starts.EnumerableToHashSet();
+        var unencountered = need.EnumerableToHashSet();
         var queue = new Queue<T>();
         foreach (var r in res)
         {

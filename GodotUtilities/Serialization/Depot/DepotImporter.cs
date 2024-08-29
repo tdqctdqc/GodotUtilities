@@ -309,7 +309,7 @@ public class DepotImporter
         string columnName)
     {
         return UnpackEnumerable<TValue>(list, columnName)
-            .ToHashSet();
+            .EnumerableToHashSet();
     }
     
     private IEnumerable<TValue> UnpackEnumerable<TValue>(

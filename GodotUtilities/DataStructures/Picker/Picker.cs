@@ -1,3 +1,5 @@
+using Godot;
+
 namespace GodotUtilities.DataStructures.Picker;
 
 public class Picker<T>
@@ -10,7 +12,7 @@ public class Picker<T>
         Func<T, IEnumerable<T>> getNeighbors)
     {
         GetNeighbors = getNeighbors;
-        NotTaken = notTaken.ToHashSet();
+        NotTaken = notTaken.EnumerableToHashSet();
         OpenPickers = new HashSet<IPickerAgent<T>>();
         Agents = new List<IPickerAgent<T>>();
     }
@@ -27,9 +29,11 @@ public class Picker<T>
     {
         while (OpenPickers.Count > 0 && NotTaken.Count > toLeave)
         {
-            var wanderer = OpenPickers.GetRandomElement();
-            var open = wanderer.Pick(this);
-            if (open == false) OpenPickers.Remove(wanderer);
+            var agent = OpenPickers.GetRandomElement();
+            var open = agent.Pick(this);
+            if (open == false) OpenPickers.Remove(agent);
+            GD.Print($"remaining elements {NotTaken.Count}");
+            GD.Print($"remaining agents {OpenPickers.Count}");
         }
     }
     

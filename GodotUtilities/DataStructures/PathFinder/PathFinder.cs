@@ -33,7 +33,7 @@ public static class PathFinder<T>
     {
         var res = new List<T> { start };
         var curr = start;
-        var endNeighbors = getNeighbors(end).ToHashSet();
+        var endNeighbors = getNeighbors(end).EnumerableToHashSet();
         int iter = 0;
         while (iter < maxIter)
         {
@@ -443,7 +443,7 @@ public static class PathFinder<T>
         var res = info.CostsFromStart
             .Where(kvp => kvp.Value <= maxCost)
             .Select(kvp => kvp.Key)
-            .ToHashSet();
+            .EnumerableToHashSet();
         _pool.Return(info);
         return res; 
     }

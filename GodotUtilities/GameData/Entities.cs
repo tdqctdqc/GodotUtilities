@@ -38,7 +38,7 @@ public class Entities
     }
     public IEnumerable<T> GetAll<T>() where T : Entity
     {
-        return EntitiesById.Values.OfType<T>().ToHashSet();
+        return EntitiesById.Values.OfType<T>().EnumerableToHashSet();
     }
     public bool HasEntity(int id)
     {
