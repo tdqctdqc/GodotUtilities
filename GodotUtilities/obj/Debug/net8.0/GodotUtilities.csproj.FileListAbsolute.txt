@@ -1,0 +1,13 @@
+C:\Users\Me\Desktop\games\GodotUtilities\GodotUtilities\bin\Debug\net8.0\GodotUtilities.deps.json
+C:\Users\Me\Desktop\games\GodotUtilities\GodotUtilities\bin\Debug\net8.0\GodotUtilities.dll
+C:\Users\Me\Desktop\games\GodotUtilities\GodotUtilities\bin\Debug\net8.0\GodotUtilities.pdb
+C:\Users\Me\Desktop\games\GodotUtilities\GodotUtilities\obj\Debug\net8.0\GodotUtilities.csproj.AssemblyReference.cache
+C:\Users\Me\Desktop\games\GodotUtilities\GodotUtilities\obj\Debug\net8.0\GodotUtilities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Me\Desktop\games\GodotUtilities\GodotUtilities\obj\Debug\net8.0\GodotUtilities.AssemblyInfoInputs.cache
+C:\Users\Me\Desktop\games\GodotUtilities\GodotUtilities\obj\Debug\net8.0\GodotUtilities.AssemblyInfo.cs
+C:\Users\Me\Desktop\games\GodotUtilities\GodotUtilities\obj\Debug\net8.0\GodotUtilities.csproj.CoreCompileInputs.cache
+C:\Users\Me\Desktop\games\GodotUtilities\GodotUtilities\obj\Debug\net8.0\GodotUtilities.sourcelink.json
+C:\Users\Me\Desktop\games\GodotUtilities\GodotUtilities\obj\Debug\net8.0\GodotUtilities.dll
+C:\Users\Me\Desktop\games\GodotUtilities\GodotUtilities\obj\Debug\net8.0\refint\GodotUtilities.dll
+C:\Users\Me\Desktop\games\GodotUtilities\GodotUtilities\obj\Debug\net8.0\GodotUtilities.pdb
+C:\Users\Me\Desktop\games\GodotUtilities\GodotUtilities\obj\Debug\net8.0\ref\GodotUtilities.dll

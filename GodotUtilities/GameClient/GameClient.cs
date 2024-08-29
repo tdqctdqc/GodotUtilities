@@ -30,8 +30,8 @@ public class GameClient : Node
         AddChild(canvas);
         GraphicsLayer = new Node2D();
         AddChild(GraphicsLayer);
-        AddComponent(new TooltipManager(this));
-        UiController = new UiController(this);
+        AddComponent(new TooltipManager());
+        UiController = new UiController();
         AddComponent(UiController);
     }
     public override void _Process(double delta)
@@ -57,9 +57,11 @@ public class GameClient : Node
         if (Components.ContainsKey(typeof(T)) == false) return null;
         return (T)Components[typeof(T)];
     }
+    
     public void AddComponent(IClientComponent component)
     {
         Components.Add(component.GetType(), component);
+        component.Connect(this);
     }
     private void RemoveComponent(Type type)
     {

@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net8.0": {
+      "Delaunator/1.0.10": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/DelaunatorSharp.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/DelaunatorSharp.dll": {}
+        }
+      },
       "DynamicImage/3.1.1": {
         "type": "package",
         "dependencies": {
@@ -134,6 +143,15 @@
           }
         }
       },
+      "LightObjectPool/1.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/LightObjectPool.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/LightObjectPool.dll": {}
+        }
+      },
       "MessagePack/3.0.134-beta": {
         "type": "package",
         "dependencies": {
@@ -193,6 +211,19 @@
           "lib/net40/Microsoft.Web.Infrastructure.dll": {}
         }
       },
+      "OptimizedPriorityQueue/5.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard1.0/PriorityQueue.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard1.0/PriorityQueue.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Poly2Tri/1.0.1": {
         "type": "package",
         "compile": {
@@ -217,6 +248,19 @@
     }
   },
   "libraries": {
+    "Delaunator/1.0.10": {
+      "sha512": "BYRTAWhPb0N9gIRGwSZ3vN5loMDIvNOOhJCsLT4usMYBqNH/oOuVsinzLxVrY8RFx7u3dGKaNhAbsuEVNJ79pw==",
+      "type": "package",
+      "path": "delaunator/1.0.10",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "delaunator.1.0.10.nupkg.sha512",
+        "delaunator.nuspec",
+        "lib/net471/DelaunatorSharp.dll",
+        "lib/netstandard2.0/DelaunatorSharp.dll"
+      ]
+    },
     "DynamicImage/3.1.1": {
       "sha512": "q6XNf72G/8p8aG1j7CbyOcOs4naKb+URvC9rA0hA/Ub+xestPoRVOrhJZi/Dx5Vgh2a37NLp3FfCjThsM9ztuQ==",
       "type": "package",
@@ -393,6 +437,23 @@
         "lib/netstandard2.0/Google.Protobuf.xml"
       ]
     },
+    "LightObjectPool/1.0.1": {
+      "sha512": "+Mk2M3VbyMdWubPokgKex1MMc3pSTnBY0/UfhnMYd6LoHbd/l2npSOZjjr/K4NfRVvSSKlP+UjiDihpy4GFoBw==",
+      "type": "package",
+      "path": "lightobjectpool/1.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "lib/net40/LightObjectPool.dll",
+        "lib/net45/LightObjectPool.dll",
+        "lib/net46/LightObjectPool.dll",
+        "lib/netstandard2.0/LightObjectPool.dll",
+        "lib/netstandard2.1/LightObjectPool.dll",
+        "lightobjectpool.1.0.1.nupkg.sha512",
+        "lightobjectpool.nuspec"
+      ]
+    },
     "MessagePack/3.0.134-beta": {
       "sha512": "73Qn5uksLd2BgvDQXxHNEmKCsv/4CohFYtVtRjX28+uVtMZAltvydVBmzwEa9qdLjT2GCDZwFfTgRcAsb7xbFA==",
       "type": "package",
@@ -482,6 +543,35 @@
         "microsoft.web.infrastructure.nuspec"
       ]
     },
+    "OptimizedPriorityQueue/5.1.0": {
+      "sha512": "0AnX6kAs0GiLrSqrHKe5mpQhJSHTmXeqLNucV2CxGATP/I9UzLMc1N4MtS/z8qB6mcgX61OjHdY3YbOmETGs+A==",
+      "type": "package",
+      "path": "optimizedpriorityqueue/5.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net20/PriorityQueue.dll",
+        "lib/net20/PriorityQueue.pdb",
+        "lib/net20/PriorityQueue.xml",
+        "lib/net35-unity full v3.5/PriorityQueue.dll",
+        "lib/net35-unity full v3.5/PriorityQueue.pdb",
+        "lib/net35-unity full v3.5/PriorityQueue.xml",
+        "lib/net35-unity subset v3.5/PriorityQueue.dll",
+        "lib/net35-unity subset v3.5/PriorityQueue.pdb",
+        "lib/net35-unity subset v3.5/PriorityQueue.xml",
+        "lib/net45/PriorityQueue.dll",
+        "lib/net45/PriorityQueue.pdb",
+        "lib/net45/PriorityQueue.xml",
+        "lib/netstandard1.0/PriorityQueue.dll",
+        "lib/netstandard1.0/PriorityQueue.pdb",
+        "lib/netstandard1.0/PriorityQueue.xml",
+        "lib/portable-net40+sl5+win8+wpa81+wp8/PriorityQueue.dll",
+        "lib/portable-net40+sl5+win8+wpa81+wp8/PriorityQueue.pdb",
+        "lib/portable-net40+sl5+win8+wpa81+wp8/PriorityQueue.xml",
+        "optimizedpriorityqueue.5.1.0.nupkg.sha512",
+        "optimizedpriorityqueue.nuspec"
+      ]
+    },
     "Poly2Tri/1.0.1": {
       "sha512": "+/V/DLKkJov+Lc83QE2aRAMqxl+cE6sjhMZ1kdfj1l7B/r0fPcBeLj5uU4sxrKkZVVN+j4JUNf6e2xW5vrhwqQ==",
       "type": "package",
@@ -509,11 +599,14 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "Delaunator >= 1.0.10",
       "DynamicImage >= 3.1.1",
       "GodotSharp >= 4.3.0",
       "GodotSharp.SourceGenerators >= 2.4.0",
       "Google.OrTools >= 9.10.4067",
+      "LightObjectPool >= 1.0.1",
       "MessagePack >= 3.0.134-beta",
+      "OptimizedPriorityQueue >= 5.1.0",
       "Poly2Tri >= 1.0.1"
     ]
   },
@@ -559,6 +652,10 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "Delaunator": {
+            "target": "Package",
+            "version": "[1.0.10, )"
+          },
           "DynamicImage": {
             "target": "Package",
             "version": "[3.1.1, )"
@@ -575,9 +672,17 @@
             "target": "Package",
             "version": "[9.10.4067, )"
           },
+          "LightObjectPool": {
+            "target": "Package",
+            "version": "[1.0.1, )"
+          },
           "MessagePack": {
             "target": "Package",
             "version": "[3.0.134-beta, )"
+          },
+          "OptimizedPriorityQueue": {
+            "target": "Package",
+            "version": "[5.1.0, )"
           },
           "Poly2Tri": {
             "target": "Package",

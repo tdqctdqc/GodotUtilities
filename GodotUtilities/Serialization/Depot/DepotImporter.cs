@@ -188,7 +188,8 @@ public class DepotImporter
             }
             else
             {
-                GD.Print($"couldnt unpack column type {columnType}");
+                GD.Print($"couldnt unpack column type {columnType} " +
+                         $"sheet {sheet.Name} property {propertyName}");
                 throw new Exception();
             }
 

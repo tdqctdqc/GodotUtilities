@@ -1,13 +1,9 @@
 namespace GodotUtilities.GameData;
 
-public class ModelRef<T> : IRef<T> where T : Model
+public readonly struct ModelRef<T>(string name) : IRef<T>
+    where T : Model
 {
-    public string Name { get; private set; }
-
-    public ModelRef(string name)
-    {
-        Name = name;
-    }
+    public string Name { get; } = name;
 
     public T Get(Data d)
     {

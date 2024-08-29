@@ -8,14 +8,13 @@ using GodotUtilities.Ui;
 
 public partial class UiController : Node, IClientComponent
 {
-    private GameClient _client;
     public UiMode Mode => ModeOption.Value;
     public ListSettingsOption<UiMode> ModeOption { get; private set; }
     public Node Node => this;
+    public Action Disconnect { get; set; }
 
-    public UiController(GameClient client)
+    public void Connect(GameClient client)
     {
-        _client = client;
         Disconnect += () => throw new Exception();
         var modes = new List<UiMode>
         {
@@ -27,12 +26,10 @@ public partial class UiController : Node, IClientComponent
         {
             v.oldVal?.Clear();
             v.newVal.Enter();
-            _client.GetComponent<UiFrame>().LeftBar.SetLabel(v.newVal.Name);
+            client.GetComponent<UiFrame>().LeftBar.SetLabel(v.newVal.Name);
         });
     }
 
-
-    public Action Disconnect { get; set; }
     public void Process(float delta)
     {
         Mode?.Process(delta);

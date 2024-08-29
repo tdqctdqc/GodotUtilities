@@ -36,7 +36,20 @@ public class MeshBuilder
         Colors.Add(color);
         Colors.Add(color);
     }
-    
+    public void AddTris(IEnumerable<Vector2> points, Color color)
+    {
+        var count = points.Count();
+        for (var i = 0; i < count; i+=3)
+        {
+            TriVertices.Add(points.ElementAt(i));
+            TriVertices.Add(points.ElementAt(i+1));
+            TriVertices.Add(points.ElementAt(i+2));
+            
+            Colors.Add(color);
+            Colors.Add(color);
+            Colors.Add(color);
+        }
+    }
     
     
     private void JoinLinePoints(Vector2 from, Vector2 to, float thickness, Color color)

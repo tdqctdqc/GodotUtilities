@@ -2,18 +2,14 @@ using GodotUtilities.DataStructures;
 
 namespace GodotUtilities.GameData;
 
-public class ModelIdRef<T> : IIdRef<T> 
+public readonly struct ModelIdRef<T>(int id = -1) : IIdRef<T>
     where T : Model
 {
-    public int Id { get; }
-
-    public ModelIdRef(int id)
-    {
-        Id = id;
-    }
+    public int Id { get; } = id;
 
     public T Get(Data d)
     {
-        return d.Entities.Get<ModelToken<T>>(Id).Get(d);
+        var name = d.ModelIdRegister.NamesById[Id];
+        return (T)d.Models.ModelsByName[name];
     }
 }

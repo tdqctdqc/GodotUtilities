@@ -60,7 +60,7 @@ public static class HexExt
         }
     }
     
-    public static Vector2 GetWorldPosFromGridCoords(
+    public static Vector2 GetWorldPos(
         this Vector2I gridCoords)
     {   
         var pos = new Vector2(gridCoords.X * 1.5f, gridCoords.Y * .866f * 2f);
@@ -72,9 +72,9 @@ public static class HexExt
     }
     public static float GetHexAngle(this Vector3I h1, Vector3I h2)
     {
-        var p1 = GetWorldPosFromGridCoords(
+        var p1 = GetWorldPos(
             CubeToGridCoords(h1));
-        var p2 = GetWorldPosFromGridCoords(
+        var p2 = GetWorldPos(
             CubeToGridCoords(h2));
         return .5f * Mathf.Pi - (p2 - p1).AngleTo(Vector2.Up);
     }
@@ -83,6 +83,24 @@ public static class HexExt
         return (Math.Abs(h1.X - h2.X) 
                       + Math.Abs(h1.Y - h2.Y) 
                       + Math.Abs(h1.Z - h2.Z)) / 2;
+    }
+
+    public static long GetKey(this Vector3I coord)
+    {
+        const long max = 2_097_152;
+        const long maxSq = max * max;
+        var x = (long)coord.X;
+        var y = (long)coord.Y;
+        var z = (long)coord.Z;
+
+        checked
+        {
+            var xCheck = x * maxSq;
+            var yCheck = y * maxSq;
+            var zCheck = z * maxSq;
+
+            return x + max * y + maxSq * z;
+        }
     }
     
 }

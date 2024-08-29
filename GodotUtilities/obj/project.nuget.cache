@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "MMqKoYliW6A=",
+  "dgSpecHash": "U38qDAhRnHY=",
   "success": true,
   "projectFilePath": "C:\\Users\\Me\\Desktop\\games\\GodotUtilities\\GodotUtilities\\GodotUtilities.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Me\\.nuget\\packages\\delaunator\\1.0.10\\delaunator.1.0.10.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\dynamicimage\\3.1.1\\dynamicimage.3.1.1.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\godotsharp\\4.3.0\\godotsharp.4.3.0.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\godotsharp.sourcegenerators\\2.4.0\\godotsharp.sourcegenerators.2.4.0.nupkg.sha512",
@@ -14,11 +15,13 @@
     "C:\\Users\\Me\\.nuget\\packages\\google.ortools.runtime.osx-x64\\9.10.4067\\google.ortools.runtime.osx-x64.9.10.4067.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\google.ortools.runtime.win-x64\\9.10.4067\\google.ortools.runtime.win-x64.9.10.4067.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\google.protobuf\\3.26.1\\google.protobuf.3.26.1.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\lightobjectpool\\1.0.1\\lightobjectpool.1.0.1.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\messagepack\\3.0.134-beta\\messagepack.3.0.134-beta.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\messagepack.annotations\\3.0.134-beta\\messagepack.annotations.3.0.134-beta.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\messagepackanalyzer\\3.0.134-beta\\messagepackanalyzer.3.0.134-beta.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\microsoft.net.stringtools\\17.10.4\\microsoft.net.stringtools.17.10.4.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\microsoft.web.infrastructure\\1.0.0\\microsoft.web.infrastructure.1.0.0.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\optimizedpriorityqueue\\5.1.0\\optimizedpriorityqueue.5.1.0.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\poly2tri\\1.0.1\\poly2tri.1.0.1.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\webactivatorex\\2.0.2\\webactivatorex.2.0.2.nupkg.sha512"
   ],

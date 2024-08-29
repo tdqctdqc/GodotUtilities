@@ -43,6 +43,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Delaunator": {
+              "target": "Package",
+              "version": "[1.0.10, )"
+            },
             "DynamicImage": {
               "target": "Package",
               "version": "[3.1.1, )"
@@ -59,9 +63,17 @@
               "target": "Package",
               "version": "[9.10.4067, )"
             },
+            "LightObjectPool": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
             "MessagePack": {
               "target": "Package",
               "version": "[3.0.134-beta, )"
+            },
+            "OptimizedPriorityQueue": {
+              "target": "Package",
+              "version": "[5.1.0, )"
             },
             "Poly2Tri": {
               "target": "Package",

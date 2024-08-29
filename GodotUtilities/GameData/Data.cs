@@ -1,22 +1,34 @@
+using Godot;
 using GodotUtilities.DataStructures;
 using GodotUtilities.Serialization;
 using GodotUtilities.Serialization.Depot;
 
 namespace GodotUtilities.GameData;
 
-public class Data
+public class Data(IdDispenser idDispenser, Entities entities, 
+    Models models, Serializer serializer,
+    Dictionary<Type, object> singletons,
+    RandomNumberGenerator random)
 {
-    public IdDispenser IdDispenser { get; private set; }
-    public Entities Entities { get; private set; }
-    public Models Models { get; private set; }
-    public Serializer Serializer { get; private set; }
+    public IdDispenser IdDispenser { get; private set; } = idDispenser;
+    public Entities Entities { get; private set; } = entities;
+    public Models Models { get; private set; } = models;
+    public ModelIdRegister ModelIdRegister => (ModelIdRegister)Singletons[typeof(ModelIdRegister)];
+    public Dictionary<Type, object> Singletons { get; private set; } = singletons;
+    public Serializer Serializer { get; private set; } = serializer;
+    public RandomNumberGenerator Random { get; private set; } = random;
 
     public static void SetupForHost(Data d, ModelImporter modelImporter)
     {
         modelImporter.SetupModels(d.Models);
+        var register = new ModelIdRegister(d.IdDispenser.TakeId(),
+            new Dictionary<int, string>(),
+            new Dictionary<string, int>());
+        d.Entities.AddEntity(register, d);
+        
         foreach (var (name, model) in d.Models.ModelsByName)
         {
-            model.MakeToken(d);
+            register.Register(model, d);
         }
     }
     public static void SetupForRemote(Data d, ModelImporter modelImporter)
@@ -25,19 +37,23 @@ public class Data
     }
     public static void SetupForLoad(Data d, string path, ModelImporter modelImporter)
     {
-        var models = new Models();
-        var serializer = new Serializer();
-        var saveFile = Loader<SaveFile>.Load(path, serializer);
+        var saveFile = Loader<SaveFile>.Load(path, d.Serializer);
         d.IdDispenser = saveFile.IdDispenser;
         d.Entities = saveFile.Entities;
-        modelImporter.SetupModels(models);
+        modelImporter.SetupModels(d.Models);
     }
 
-    public Data(IdDispenser idDispenser, Entities entities, Models models, Serializer serializer)
+    public void SetEntitySingleton<T>() where T : Entity
     {
-        IdDispenser = idDispenser;
-        Entities = entities;
-        Models = models;
-        Serializer = serializer;
+        var singleton = Entities.GetAll<T>().Single();
+        SetSingleton<T>(singleton);
     }
+    public void SetSingleton<T>(T t)
+    {
+        var type = typeof(T);
+        if (t is null) throw new Exception();
+        if (Singletons.TryGetValue(type, out var singleton)) throw new Exception();
+        Singletons.Add(type, t);
+    }
+    
 }

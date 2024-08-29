@@ -12,15 +12,16 @@ public partial class TooltipManager : Control, IClientComponent
     private Vector2 _offsetFromMouse = new Vector2(20f, 20f);
     
     Node IClientComponent.Node => this;
-    public Action Disconnect { get; set; }
-
-    public TooltipManager(GameClient client)
+    public void Connect(GameClient client)
     {
         _panel = new TooltipPanel();
         AddChild(_panel);
         _panel.Visible = false;
         client.UiLayer.AddChild(this);
     }
+
+
+    public Action Disconnect { get; set; }
 
     public void Clear()
     {

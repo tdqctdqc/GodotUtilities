@@ -12,17 +12,8 @@ public partial class UiFrame : VBoxContainer,
     public MultiBar LeftBar { get; private set; }
     public VBoxContainer RightSidebar { get; private set; }
     public Action Disconnect { get; set; }
-    public void Process(float delta)
-    {
-        
-    }
 
-    public override void _Ready()
-    {
-        CustomMinimumSize = GetViewportRect().Size;
-    }
-
-    public UiFrame(GameClient client)
+    public void Connect(GameClient client)
     {
         MouseFilter = MouseFilterEnum.Ignore;
         this.FullRect();
@@ -53,6 +44,16 @@ public partial class UiFrame : VBoxContainer,
         RightSidebar.MouseFilter = MouseFilterEnum.Stop;
         sidebars.AddChild(RightSidebar);
         client.UiLayer.AddChild(this);
+    }
+
+    public void Process(float delta)
+    {
+        
+    }
+
+    public override void _Ready()
+    {
+        CustomMinimumSize = GetViewportRect().Size;
     }
 
     public void AddTopBar(Node topBar)

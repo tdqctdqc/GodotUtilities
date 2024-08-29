@@ -1,16 +1,87 @@
+using System.Collections.Specialized;
+using Godot;
+
 namespace GodotUtilities.DataStructures;
 
 public static class FloodFill<T>
 {
-    public static HashSet<T> FloodFillForIter(T seed,
-        int iter,
+    public static HashSet<T> FloodFillRandomishToLimit(T seed,
+        int limit,
+        Func<T, IEnumerable<T>> getNeighbors,
+        Func<T, bool> valid,
+        RandomNumberGenerator random)
+    {
+        var res = new HashSet<T> { seed };
+        var open = new HashSet<T>();
+        open.Add(seed);
+        while (res.Count < limit)
+        {
+            if (open.Count == 0) break;
+            var curr = open.GetRandomElement();
+            var ns = getNeighbors(curr)
+                .Where(x => res.Contains(x) == false 
+                    && valid(x));
+
+            if (ns.Any() == false)
+            {
+                open.Remove(curr);
+                continue;
+            }
+
+            var n = ns.GetRandomElement();
+            open.Add(n);
+            res.Add(n);
+        }
+
+        return res;
+    }
+    
+    
+    public static HashSet<T> FloodFillToLimit(T seed,
+        int limit,
         Func<T, IEnumerable<T>> getNeighbors,
         Func<T, bool> valid)
     {
         var list = new List<T>{ seed };
         var res = new HashSet<T> { seed };
         var lastAddition = 1;
-        for (var i = 0; i < iter; i++)
+        
+        while(res.Count < limit)
+        {
+            var thisAddition = 0;
+            var count = list.Count;
+            for (int j = count - lastAddition; j < count; j++)
+            {
+                var t = list[j];
+                foreach (var n in getNeighbors(t))
+                {
+                    if (res.Contains(n) == false && valid(n))
+                    {
+                        list.Add(n);
+                        res.Add(n);
+                        thisAddition++;
+                        if (res.Count == limit) break;
+                    }
+                }
+            }
+
+            if (thisAddition == 0) break;
+            lastAddition = thisAddition;
+        }
+
+        return res;
+    }
+    
+    
+    public static HashSet<T> FloodFillToRadius(T seed,
+        int radius,
+        Func<T, IEnumerable<T>> getNeighbors,
+        Func<T, bool> valid)
+    {
+        var list = new List<T>{ seed };
+        var res = new HashSet<T> { seed };
+        var lastAddition = 1;
+        for (var i = 0; i < radius; i++)
         {
             var thisAddition = 0;
             var count = list.Count;
