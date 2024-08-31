@@ -24,12 +24,7 @@ public class Branch<T>
         return b;
     }
 
-    public static IEnumerable<Branch<T>> GetAtDepth(int depth,
-        IEnumerable<Branch<T>> top)
-    {
-        if (depth == 0) return top;
-        return top.SelectMany(t => GetAtDepth(depth - 1, t.Children));
-    }
+    
     
     public static Branch<T> ConstructTrunk(Branch<T> seed)
     {
@@ -122,6 +117,13 @@ public class Branch<T>
     IEnumerable<T> IChildrened<T>.Children => Leaves;
 
     Branch<T> IAggregate<Branch<T>, Branch<T>>.Seed => TrunkSeed;
+
+    public Branch<T> GetTrunkSeedAtDepth(int depth)
+    {
+        if (depth == 0) return this;
+        return TrunkSeed.GetTrunkSeedAtDepth(depth - 1);
+    }
+    
     public void SetSeed(T seed)
     {
         TwigSeed = seed;
@@ -133,8 +135,8 @@ public class Branch<T>
     }
 
     T IAggregate<Branch<T>, T>.Seed => GetTwigSeed();
-
-    private T GetTwigSeed()
+    
+    public T GetTwigSeed()
     {
         if (TwigSeed is not null) return TwigSeed;
         return TrunkSeed.GetTwigSeed();
