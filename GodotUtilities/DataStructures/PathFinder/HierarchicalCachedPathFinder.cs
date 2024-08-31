@@ -10,6 +10,7 @@ public class HierarchicalCachedPathFinder<TSuper, TSub>
     public CachedPathFinder<TSub> LowLvlPathFinder { get; private set; }
     public CachedPathFinder<TSuper> HiLvlPathFinder { get; private set; }
     public Dictionary<Vector2I, List<TSub>> PathCache { get; private set; }
+    public Dictionary<Vector2I, List<TSub>> ReversePathCache { get; private set; }
     public Dictionary<Vector2I, float> PathCostCache { get; private set; }
     public Func<TSuper, TSub> GetSeed { get; private set; }
     public static HierarchicalCachedPathFinder<TSuper, TSub>
@@ -48,6 +49,7 @@ public class HierarchicalCachedPathFinder<TSuper, TSub>
         LowLvlPathFinder = lowLvlPathFinder;
         HiLvlPathFinder = hiLvlPathFinder;
         PathCache = new Dictionary<Vector2I, List<TSub>>();
+        ReversePathCache = new Dictionary<Vector2I, List<TSub>>();
         PathCostCache = new Dictionary<Vector2I, float>();
         GetSeed = getSeed;
     }
@@ -71,38 +73,46 @@ public class HierarchicalCachedPathFinder<TSuper, TSub>
         out float cost)
     {
         var key = start.GetIdEdgeKey(end);
-        List<TSub> path;
-        if (PathCache.TryGetValue(key, out var p))
-        {
-            (path, cost) = (p, PathCostCache[key]);
-        }
-        else
-        {
-            path = FindPath(start, end, out var c);
-            cost = c;
-            PathCache.Add(key, path);
-            PathCostCache.Add(key, cost);
-        }
         
-        return path;
+
+        if (PathCache.ContainsKey(key) == false)
+        {
+            var newPath = FindPath(start, end, out var newCost);
+            var reverse = new List<TSub>(newPath.Count);
+            for (var i = newPath.Count - 1; i >= 0; i--)
+            {
+                reverse.Add(newPath[i]);
+            }
+            PathCache.Add(key, newPath);
+            ReversePathCache.Add(key, reverse);
+            PathCostCache.Add(key, newCost);
+        }
+
+        cost = PathCostCache[key];
+        
+        return start.Id < end.Id
+            ? PathCache[key]
+            : ReversePathCache[key];
     }
 
     private List<TSub> FindPath(TSuper start, TSuper end, 
         out float cost)
     {
         var superPath
-            = HiLvlPathFinder.FindPath(start, end, 
+            = HiLvlPathFinder.GetPath(start, end, 
                 out var superCost);
         var path = new List<TSub>();
         cost = 0f;
+        
         for (var i = 0; i < superPath.Count - 1; i++)
         {
             var from = superPath[i];
             var to = superPath[i + 1];
-
+            
             var subPath = LowLvlPathFinder
-                .FindPath(GetSeed(from), GetSeed(to), 
+                .GetPath(GetSeed(from), GetSeed(to), 
                     out var subCost);
+            
             path.AddRange(subPath);
             cost += subCost;
         }

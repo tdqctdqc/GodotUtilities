@@ -7,14 +7,12 @@ public class BlobPickerAgent<T> : IPickerAgent<T>
     public HashSet<T> Frontier { get; private set; }
     public HashSet<T> FrontierBuffer { get; private set; }
     private Func<T, bool> _valid;
-    public int NumToPick { get; private set; }
 
-    public BlobPickerAgent(T seed, Picker<T> host, int numToPick, 
+    public BlobPickerAgent(T seed, Picker<T> host, 
         Func<T, bool> valid)
     {
         Seeds = new HashSet<T> { seed };
         _valid = valid;
-        NumToPick = numToPick;
         Picked = new HashSet<T>();
         Frontier = new HashSet<T>();
         FrontierBuffer = new HashSet<T>();
@@ -32,7 +30,7 @@ public class BlobPickerAgent<T> : IPickerAgent<T>
         Add(seed, host);
     }
 
-    public bool Pick(Picker<T> host)
+    public IEnumerable<T> Pick(Picker<T> host)
     {
         var found = false;
         FrontierBuffer.Clear();
@@ -45,15 +43,14 @@ public class BlobPickerAgent<T> : IPickerAgent<T>
                 FrontierBuffer.UnionWith(host.GetNeighbors(x));
             }
         }
-
+        
         (Frontier, FrontierBuffer) = (FrontierBuffer, Frontier);
-        return found;
+        return Frontier;
     }
 
     protected void Add(T t, Picker<T> host)
     {
         Picked.Add(t);
-        host.NotTaken.Remove(t);
     }
 
 }

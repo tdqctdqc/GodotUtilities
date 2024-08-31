@@ -56,7 +56,7 @@ public static class FloodFill<T>
                 open.Remove(curr);
                 continue;
             }
-
+            
             var n = ns.MinBy(x => dist(seed, x));
             open.Add(n);
             res.Add(n);

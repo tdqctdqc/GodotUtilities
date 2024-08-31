@@ -25,16 +25,32 @@ public class Picker<T>
     }
 
     
-    public void RandomAgentPick(int toLeave = 0)
+
+    public void PickRandomlyToLimit(int toLeave)
     {
         while (OpenPickers.Count > 0 && NotTaken.Count > toLeave)
         {
-            var agent = OpenPickers.GetRandomElement();
-            var open = agent.Pick(this);
-            if (open == false) OpenPickers.Remove(agent);
-            GD.Print($"remaining elements {NotTaken.Count}");
-            GD.Print($"remaining agents {OpenPickers.Count}");
+            RandomAgentPick();
         }
+    }
+    public void RandomAgentPick()
+    {
+        var agent = OpenPickers.GetRandomElement();
+        AgentPick(agent);
+    }
+
+    public void AgentPick(IPickerAgent<T> agent)
+    {
+        if (OpenPickers.Contains(agent) == false) return;
+        var picked = agent.Pick(this);
+        var found = false;
+        foreach (var v in picked)
+        {
+            found = true;
+            NotTaken.Remove(v);
+        }
+            
+        if (found == false) OpenPickers.Remove(agent);
     }
     
     

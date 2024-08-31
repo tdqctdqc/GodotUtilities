@@ -1,41 +1,38 @@
 namespace GodotUtilities.DataStructures.Picker;
-
+using Priority_Queue;
 public class AdjacencyCountPickerAgent<T> : IPickerAgent<T>
 {
     public HashSet<T> Seeds { get; private set; }
     public HashSet<T> Picked { get; private set; }
-    //todo remake as maxheap
-    public Dictionary<T, int> Adjacents { get; private set; }
+    public SimplePriorityQueue<T> Adjacents { get; private set; }
     private Func<T, bool> _valid;
     public int NumToPick { get; private set; }
 
-    public AdjacencyCountPickerAgent(T seed, Picker<T> host, int numToPick, 
+    public AdjacencyCountPickerAgent(T seed, 
+        Picker<T> host, 
+        int numToPick, 
         Func<T, bool> valid)
     {
         Seeds = new HashSet<T> { seed };
         _valid = valid;
         NumToPick = numToPick;
         Picked = new HashSet<T>();
-        Adjacents = new Dictionary<T, int>();
+        Adjacents = new SimplePriorityQueue<T>();
         host.AddAgent(this);
         Add(seed, host);
     }
 
-    public bool Pick(Picker<T> host)
+    public IEnumerable<T> Pick(Picker<T> host)
     {
-        while (true)
+        var taken = 0;
+        while (Adjacents.Any() && taken < NumToPick)
         {
-            var avail = Adjacents.Keys.Intersect(host.NotTaken);
-            if (avail.Any() == false) return false;
-            var max = avail.MaxBy(a => Adjacents[a]);
-            if (_valid(max))
+            var t = Adjacents.Dequeue();
+            if (host.NotTaken.Contains(t))
             {
-                Add(max, host);
-                return true;
-            }
-            else
-            {
-                Adjacents.Remove(max);
+                taken++;
+                Add(t, host);
+                yield return t;
             }
         }
     }
@@ -45,14 +42,22 @@ public class AdjacencyCountPickerAgent<T> : IPickerAgent<T>
     protected void Add(T t, Picker<T> host)
     {
         Picked.Add(t);
-        host.NotTaken.Remove(t);
         Adjacents.Remove(t);
         
         foreach (var n in host.GetNeighbors(t))
         {
-            if (_valid(n) && host.NotTaken.Contains(n))
+            if (host.NotTaken.Contains(n) && _valid(n) 
+                && Picked.Contains(n) == false)
             {
-                Adjacents.AddOrSum(n, 1);
+                if (Adjacents.Contains(n))
+                {
+                    var score = Adjacents.GetPriority(n);
+                    Adjacents.UpdatePriority(n, score - 1f);
+                }
+                else
+                {
+                    Adjacents.Enqueue(n, -1f);
+                }
             }
         }
     }

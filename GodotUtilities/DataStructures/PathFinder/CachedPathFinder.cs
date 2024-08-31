@@ -9,6 +9,8 @@ public class CachedPathFinder<T>
         = new ();
     public Dictionary<Vector2I, List<T>> PathCache { get; private set; }
         = new();
+    public Dictionary<Vector2I, List<T>> ReversePathCache { get; private set; }
+        = new();
     public Dictionary<Vector2I, float> PathCostCache { get; private set; }
         = new();
 
@@ -36,23 +38,32 @@ public class CachedPathFinder<T>
         };
     }
 
-    public List<T> FindPath(T start, T end,
+    public List<T> GetPath(T start, T end,
         out float cost)
     {
         var key = start.GetIdEdgeKey(end);
-        List<T> path;
-        if (PathCache.TryGetValue(key, out var p))
+        var (lo, hi) = start.Id < end.Id
+            ? (start, end)
+            : (end, start);
+        
+        if(PathCache.ContainsKey(key) == false)
         {
-            (path, cost) = (p, PathCostCache[key]);
-        }
-        else
-        {
-            (path, cost) = _findPath(start, end);
-            PathCache.Add(key, path);
-            PathCostCache.Add(key, cost);
+            var (newPath, newCost) = _findPath(lo, hi);
+            PathCache.Add(key, newPath);
+            var reverse = new List<T>(newPath.Count);
+            for (var i = newPath.Count - 1; i >= 0; i--)
+            {
+                reverse.Add(newPath[i]);
+            }
+            ReversePathCache.Add(key, reverse);
+            PathCostCache.Add(key, newCost);
         }
         
-        return path;
+        cost = PathCostCache[key];
+        
+        return start.Id < end.Id
+            ? PathCache[key]
+            : ReversePathCache[key];
     }
 
     public float GetEdgeCost(T t, T r)

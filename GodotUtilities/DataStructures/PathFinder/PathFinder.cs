@@ -27,7 +27,7 @@ public static partial class PathFinder
         {
             foreach (var superN in getHiLvlNeighbors(super))
             {
-                pathFinder.FindPath(getSeed(super), getSeed(superN), 
+                pathFinder.GetPath(getSeed(super), getSeed(superN), 
                     out var cost);
             }
         }
