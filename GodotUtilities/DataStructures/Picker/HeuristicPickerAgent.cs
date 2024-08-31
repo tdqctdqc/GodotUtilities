@@ -21,6 +21,8 @@ public class HeuristicPickerAgent<T> : IPickerAgent<T>
         Seeds = new HashSet<T>{seed};
         Picked = new HashSet<T>();
         Candidates = new SimplePriorityQueue<T, float>();
+        Add(seed, host);
+        host.AddAgent(this);
     }
 
     public IEnumerable<T> Pick(Picker<T> host)
@@ -50,6 +52,4 @@ public class HeuristicPickerAgent<T> : IPickerAgent<T>
             }
         }
     }
-
-    
 }

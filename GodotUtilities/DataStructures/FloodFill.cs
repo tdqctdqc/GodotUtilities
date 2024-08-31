@@ -1,5 +1,6 @@
 using System.Collections.Specialized;
 using Godot;
+using Priority_Queue;
 
 namespace GodotUtilities.DataStructures;
 
@@ -64,8 +65,36 @@ public static class FloodFill<T>
 
         return res;
     }
-    
-    
+    public static HashSet<T> FloodFillHeuristicToLimitQueue(T seed,
+        int limit,
+        Func<T, IEnumerable<T>> getNeighbors,
+        Func<T, bool> valid,
+        Func<T, T, float> heuristic)
+    {
+        var res = new HashSet<T> { };
+        var open = new SimplePriorityQueue<T, float>();
+        open.Enqueue(seed, heuristic(seed, seed));
+        while (open.Count > 0 && res.Count < limit)
+        {
+            var curr = open.Dequeue();
+            if (valid(curr) == false) continue;
+            res.Add(curr);
+            foreach (var n in getNeighbors(curr))
+            {
+                if (res.Contains(n)
+                    || open.Contains(n)
+                    || valid(n) == false)
+                {
+                    continue;
+                }
+
+                var dist = heuristic(n, seed);
+                open.Enqueue(n, dist);
+            }
+        }
+
+        return res;
+    }
     public static HashSet<T> FloodFillToLimit(T seed,
         int limit,
         Func<T, IEnumerable<T>> getNeighbors,

@@ -39,10 +39,10 @@ public class Picker<T>
         AgentPick(agent);
     }
 
-    public void AgentPick(IPickerAgent<T> agent)
+    public IEnumerable<T> AgentPick(IPickerAgent<T> agent)
     {
-        if (OpenPickers.Contains(agent) == false) return;
-        var picked = agent.Pick(this);
+        if (OpenPickers.Contains(agent) == false) return null;
+        var picked = agent.Pick(this).ToArray();
         var found = false;
         foreach (var v in picked)
         {
@@ -51,6 +51,7 @@ public class Picker<T>
         }
             
         if (found == false) OpenPickers.Remove(agent);
+        return picked;
     }
     
     

@@ -26,8 +26,8 @@ public class BlobPickerAgent<T> : IPickerAgent<T>
                 }
             }
         }
-        host.AddAgent(this);
         Add(seed, host);
+        host.AddAgent(this);
     }
 
     public IEnumerable<T> Pick(Picker<T> host)
