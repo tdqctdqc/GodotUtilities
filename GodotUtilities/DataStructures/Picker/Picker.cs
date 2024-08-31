@@ -26,11 +26,27 @@ public class Picker<T>
 
     
 
-    public void PickRandomlyToLimit(int toLeave)
+    public void PickRandomlyToLimit(int toLeave = 0)
     {
         while (OpenPickers.Count > 0 && NotTaken.Count > toLeave)
         {
             RandomAgentPick();
+        }
+    }
+
+    public void PickInOrderTil(int toLeave = 0)
+    {
+        while (OpenPickers.Count > 0 && NotTaken.Count > toLeave)
+        {
+            EachAgentPickOnce();
+        }
+    }
+    public void EachAgentPickOnce(int toLeave = 0)
+    {
+        foreach (var agent in OpenPickers.ToArray())
+        {
+            AgentPick(agent);
+            if (NotTaken.Count <= toLeave) break;
         }
     }
     public void RandomAgentPick()

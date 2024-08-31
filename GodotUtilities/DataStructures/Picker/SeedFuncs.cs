@@ -10,18 +10,22 @@ public static class SeedFuncs
         Func<T, IEnumerable<T>> getNeighbors,
         int excludeRadius)
     {
-        List<T> getList(HashSet<T> elements)
+        List<T> getList(HashSet<T> ts)
         {
             var l = new List<T>();
-            var hash = elements.ToHashSet();
+            var hash = ts.ToHashSet();
             while (hash.Count > 0)
             {
                 var t = hash.First();
                 hash.Remove(t);
                 l.Add(t);
                 var flood = FloodFill<T>.FloodFillToRadius(
-                    t, excludeRadius, getNeighbors, n => canShare(t, n));
+                    t, excludeRadius, getNeighbors, 
+                    n => canShare(t, n) 
+                         && ts.Contains(n)
+                         && hash.Contains(n));
                 hash.ExceptWith(flood);
+                ts.Remove(t);
             }
                 
             return l;

@@ -1,3 +1,5 @@
+using Godot;
+
 namespace GodotUtilities.DataStructures.Picker;
 using Priority_Queue;
 public class HeuristicPickerAgent<T> : IPickerAgent<T>
@@ -27,11 +29,12 @@ public class HeuristicPickerAgent<T> : IPickerAgent<T>
 
     public IEnumerable<T> Pick(Picker<T> host)
     {
+        var had = Picked.Count;
         var taken = 0;
         while (Candidates.Any() && taken < NumToPick)
         {
             var t = Candidates.Dequeue();
-            if (host.NotTaken.Contains(t))
+            if (host.NotTaken.Contains(t) && _valid(t))
             {
                 taken++;
                 Add(t, host);
@@ -42,6 +45,7 @@ public class HeuristicPickerAgent<T> : IPickerAgent<T>
 
     private void Add(T t, Picker<T> host)
     {
+        Picked.Add(t);
         foreach (var n in host.GetNeighbors(t))
         {
             if (host.NotTaken.Contains(n) && _valid(n)

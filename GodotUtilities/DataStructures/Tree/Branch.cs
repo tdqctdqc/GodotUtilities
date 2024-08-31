@@ -24,6 +24,12 @@ public class Branch<T>
         return b;
     }
 
+    public static IEnumerable<Branch<T>> GetAtDepth(int depth,
+        IEnumerable<Branch<T>> top)
+    {
+        if (depth == 0) return top;
+        return top.SelectMany(t => GetAtDepth(depth - 1, t.Children));
+    }
     
     public static Branch<T> ConstructTrunk(Branch<T> seed)
     {

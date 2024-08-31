@@ -7,28 +7,28 @@ public static class TreeAggregator
 {
     public static List<TAgg> BuildTiers<TAgg>
         (IEnumerable<TAgg> aggs, 
-            Func<Func<HashSet<TAgg>, IEnumerable<TAgg>>> getSeedFactory,
-            Func<Func<TAgg, HashSet<TAgg>, HashSet<TAgg>>> chooseFactory,
+            Func<Func<HashSet<TAgg>, IEnumerable<TAgg>>> seedFactoryFactory,
+            Func<IEnumerable<TAgg>, Picker<TAgg>> pickerFactory,
+            Func<TAgg, Picker<TAgg>, IPickerAgent<TAgg>> agentFactory,
             Func<TAgg, TAgg, bool> canMerge, 
             Func<TAgg, TAgg> construct,
             int consolidateIter, int min)
                 where TAgg : IAggregate<TAgg, TAgg>
     {
         var curr = aggs.ToList();
-        
             
         for (var i = 0; i < consolidateIter; i++)
         {
-
-            var getSeeds = getSeedFactory();
-            var choose = chooseFactory();
+            var seedFactory = seedFactoryFactory();
+            var picker = pickerFactory(curr);
                 
-            var next = TreeAggregator.Aggregate<TAgg, TAgg>(
-                getSeeds,
-                choose,
-                curr.ToHashSet(),
-                construct,
-                b => b.Neighbors
+            var next = TreeAggregator
+                .Aggregate<TAgg, TAgg>(
+                    seedFactory,
+                    picker,
+                    agg => agentFactory(agg, picker),
+                    construct,
+                    b => b.Neighbors
             );
 
             curr = next;
@@ -52,7 +52,7 @@ public static class TreeAggregator
             if (agg.Children.Count() >= minSize) continue;
             var first = agg.Neighbors
                 .Where(n => canMerge(agg, n))
-                .OrderByDescending(n => n.Children.Count())
+                .OrderBy(n => n.Children.Count())
                 .FirstOrDefault();
             
             if (first is not null)
@@ -82,47 +82,48 @@ public static class TreeAggregator
     
     
     public static List<TAgg> Aggregate<TSub, TAgg>
-    (   Func<HashSet<TSub>, IEnumerable<TSub>> getSeeds,
-        Func<TSub, HashSet<TSub>, HashSet<TSub>> choose,
-        HashSet<TSub> elements, 
-        Func<TSub, TAgg> construct,
+    (   
+        Func<HashSet<TSub>, IEnumerable<TSub>> seedFactory,
+        Picker<TSub> picker, 
+        Func<TSub, IPickerAgent<TSub>> agentFactory,
+        Func<TSub, TAgg> constructAgg,
         Func<TSub, IEnumerable<TSub>> getNeighbors) 
-        where TAgg : IAggregate<TAgg, TSub>
+            where TAgg : IAggregate<TAgg, TSub>
     {
-        var initialCount = elements.Count;
         var aggs = new List<TAgg>();
-        var dic = new Dictionary<TSub, TAgg>();
+        var subLookup = new Dictionary<TSub, TAgg>();
         
-        while(elements.Count > 0)
+        while(picker.NotTaken.Count > 0)
         {
-            var seeds = getSeeds(elements).ToArray();
-            elements.ExceptWith(seeds);
+            // GD.Print("iter " + picker.NotTaken.Count);
+            var seeds = seedFactory(picker.NotTaken).ToArray();
+            // GD.Print("seeds " + seeds.Length);
+            
             foreach (var seed in seeds)
             {
-                var chosen = choose(seed, elements);
-                chosen.Add(seed);
-                elements.ExceptWith(chosen);
-                var agg = construct(seed);
-                foreach (var t in chosen)
-                {
-                    agg.AddChild(t);
-                    dic.Add(t, agg);
-                }
-                aggs.Add(agg);
+                var agent = agentFactory(seed);
+                picker.AgentPick(agent);
             }
         }
-
-        if (dic.Count != initialCount)
+        
+        foreach (var agent in picker.Agents)
         {
-            throw new Exception();
+            var agg = constructAgg(agent.Seeds.First());
+            aggs.Add(agg);
+            foreach (var sub in agent.Picked)
+            {
+                subLookup.Add(sub, agg);
+                agg.AddChild(sub);
+            }
         }
+        
         foreach (var agg in aggs)
         {
             var nAggs = 
                 agg.Children
                     .SelectMany(getNeighbors)
                     .Distinct()
-                    .Select(nSub => dic[nSub]);
+                    .Select(nSub => subLookup[nSub]);
             foreach (var nAgg in nAggs)
             {
                 if (nAgg.Equals(agg) == false)
