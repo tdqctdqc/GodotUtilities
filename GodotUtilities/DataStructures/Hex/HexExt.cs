@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using Godot;
 
 namespace GodotUtilities.DataStructures.Hex;
@@ -83,22 +84,30 @@ public static class HexExt
                       + Math.Abs(h1.Z - h2.Z)) / 2;
     }
 
-    public static long GetKey(this Vector3I coord)
+    public static long GetKeyFromGridCoord(this Vector2I coord)
     {
-        const long max = 2_097_152;
-        const long maxSq = max * max;
-        var x = (long)coord.X;
-        var y = (long)coord.Y;
-        var z = (long)coord.Z;
+        var xBytes = BitConverter.GetBytes(coord.X);
+        var yBytes = BitConverter.GetBytes(coord.Y);
+        var keyBytes = new byte[8];
+        System.Buffer.BlockCopy(xBytes, 0, keyBytes, 0, 4);
+        System.Buffer.BlockCopy(yBytes, 0, keyBytes, 4, 4);
+        var key = BitConverter.ToInt64(keyBytes);
+        if (key == long.MinValue) throw new Exception();
+        return key;
+    }
+    public static Vector2I GetGridCoordFromKey(this long key)
+    {
+        var b1 = BitConverter.GetBytes(key);
+        var b2 = new byte[4];
+        var b3 = new byte[4];
+        System.Buffer.BlockCopy(b1, 0, b2, 0, 4);
+        System.Buffer.BlockCopy(b1, 4, b3, 0, 4);
+        return new Vector2I(BitConverter.ToInt32(b2), BitConverter.ToInt32(b3)); 
+    }
 
-        checked
-        {
-            var xCheck = x * maxSq;
-            var yCheck = y * maxSq;
-            var zCheck = z * maxSq;
-
-            return x + max * y + maxSq * z;
-        }
+    public static Vector3I GetCubeCoordFromKey(this long key)
+    {
+        return key.GetGridCoordFromKey().GridCoordsToCube();
     }
     
 }

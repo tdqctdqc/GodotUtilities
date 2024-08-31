@@ -12,8 +12,6 @@ public class ModelIdRegister(int id, Dictionary<int, string> namesById, Dictiona
         var id = d.IdDispenser.TakeId();
         NamesById.Add(id, m.Name);
         IdsByName.Add(m.Name, id);
-        GD.Print("registering " + m.Name + " as " + id);
-
     }
     public override void Made(Data d)
     {

@@ -35,6 +35,36 @@ public static class FloodFill<T>
         return res;
     }
     
+    public static HashSet<T> FloodFillHeuristicToLimit(T seed,
+        int limit,
+        Func<T, IEnumerable<T>> getNeighbors,
+        Func<T, bool> valid,
+        Func<T, T, float> dist)
+    {
+        var res = new HashSet<T> { seed };
+        var open = new HashSet<T> { seed };
+        while (res.Count < limit)
+        {
+            if (open.Count == 0) break;
+            var curr = open.GetRandomElement();
+            var ns = getNeighbors(curr)
+                .Where(x => res.Contains(x) == false 
+                            && valid(x));
+
+            if (ns.Any() == false)
+            {
+                open.Remove(curr);
+                continue;
+            }
+
+            var n = ns.MinBy(x => dist(seed, x));
+            open.Add(n);
+            res.Add(n);
+        }
+
+        return res;
+    }
+    
     
     public static HashSet<T> FloodFillToLimit(T seed,
         int limit,

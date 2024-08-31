@@ -13,4 +13,16 @@ public static class PickerFuncs
             n => free.Contains(n) && canShare(t, n),
             random);
     }
+    
+    
+    public static Func<T, HashSet<T>, HashSet<T>> ChooseMinByHeuristic<T>(
+        int leafSize, Func<T, IEnumerable<T>> getNeighbors,
+        Func<T, T, bool> canShare, 
+        Func<T, T, float> heuristic)
+    {
+        return (t, free) => FloodFill<T>.FloodFillHeuristicToLimit(
+            t, leafSize, getNeighbors,
+            n => free.Contains(n) && canShare(t, n),
+            heuristic);
+    }
 }

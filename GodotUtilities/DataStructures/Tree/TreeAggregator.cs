@@ -10,7 +10,7 @@ public static class TreeAggregator
             Func<Func<HashSet<TAgg>, IEnumerable<TAgg>>> getSeedFactory,
             Func<Func<TAgg, HashSet<TAgg>, HashSet<TAgg>>> chooseFactory,
             Func<TAgg, TAgg, bool> canMerge, 
-            Func<TAgg> construct,
+            Func<TAgg, TAgg> construct,
             int consolidateIter, int min)
                 where TAgg : IAggregate<TAgg, TAgg>
     {
@@ -85,7 +85,7 @@ public static class TreeAggregator
     (   Func<HashSet<TSub>, IEnumerable<TSub>> getSeeds,
         Func<TSub, HashSet<TSub>, HashSet<TSub>> choose,
         HashSet<TSub> elements, 
-        Func<TAgg> construct,
+        Func<TSub, TAgg> construct,
         Func<TSub, IEnumerable<TSub>> getNeighbors) 
         where TAgg : IAggregate<TAgg, TSub>
     {
@@ -102,7 +102,7 @@ public static class TreeAggregator
                 var chosen = choose(seed, elements);
                 chosen.Add(seed);
                 elements.ExceptWith(chosen);
-                var agg = construct();
+                var agg = construct(seed);
                 foreach (var t in chosen)
                 {
                     agg.AddChild(t);

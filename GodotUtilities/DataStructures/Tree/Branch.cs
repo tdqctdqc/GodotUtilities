@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Godot;
 using GodotUtilities.DataStructures.Tree;
 
@@ -5,22 +6,45 @@ using GodotUtilities.DataStructures.Tree;
 namespace GodotUtilities.DataStructures.AggregateTree;
 
 public class Branch<T>
-    : IAggregate<Branch<T>, Branch<T>>, IAggregate<Branch<T>, T>
+    : IAggregate<Branch<T>, Branch<T>>, IAggregate<Branch<T>, T>,
+        IIded
+    where T : IIded
 {
     public HashSet<Branch<T>> Neighbors { get; private set; } 
     public HashSet<Branch<T>> Children { get; private set; }
     public HashSet<T> Leaves { get; private set; }
-
-    public Branch()
+    public Branch<T> TrunkSeed { get; private set; }
+    public T TwigSeed { get; private set; }
+    public int Id { get; private set; }
+    public static Branch<T> ConstructTwig(T seed)
     {
-        Neighbors = new HashSet<Branch<T>>();
-        Children = new HashSet<Branch<T>>();
-        Leaves = new HashSet<T>();
+        var b = new Branch<T>(new HashSet<Branch<T>>(),
+            null, new HashSet<T>(), seed.Id);
+        b.SetSeed(seed);
+        return b;
+    }
+
+    
+    public static Branch<T> ConstructTrunk(Branch<T> seed)
+    {
+        var b = new Branch<T>(new HashSet<Branch<T>>(),
+            new HashSet<Branch<T>>(), null, seed.Id);
+        b.SetSeed(seed);
+        return b;
+    }
+    private Branch(HashSet<Branch<T>> neighbors, 
+        HashSet<Branch<T>> children, HashSet<T> leaves,
+        int id)
+    {
+        Id = id;
+        Neighbors = neighbors;
+        Children = children;
+        Leaves = leaves;
     }
 
     public T GetFirstLeaf()
     {
-        if (Leaves.Count > 0)
+        if (Leaves?.Count > 0)
         {
             return Leaves.First();
         }
@@ -38,18 +62,22 @@ public class Branch<T>
     }
     public IEnumerable<T> GetLeaves()
     {
-        //todo dont yield
-        foreach (var leaf in Leaves)
+        if (Leaves is not null)
         {
-            yield return leaf;
+            return Leaves;
         }
-        foreach (var branch in Children)
+
+        return Children.SelectMany(c => c.GetLeaves());
+    }
+
+    public IEnumerable<Branch<T>> GetTwigs()
+    {
+        if (Children is not null)
         {
-            foreach (var leaf in branch.GetLeaves())
-            {
-                yield return leaf;
-            }
+            return Children.SelectMany(c => c.GetTwigs());
         }
+
+        return this.Yield();
     }
     public void AddNeighbor(Branch<T> t)
     {
@@ -87,4 +115,22 @@ public class Branch<T>
 
     IEnumerable<T> IChildrened<T>.Children => Leaves;
 
+    Branch<T> IAggregate<Branch<T>, Branch<T>>.Seed => TrunkSeed;
+    public void SetSeed(T seed)
+    {
+        TwigSeed = seed;
+    }
+
+    public void SetSeed(Branch<T> seed)
+    {
+        TrunkSeed = seed;
+    }
+
+    T IAggregate<Branch<T>, T>.Seed => GetTwigSeed();
+
+    private T GetTwigSeed()
+    {
+        if (TwigSeed is not null) return TwigSeed;
+        return TrunkSeed.GetTwigSeed();
+    }
 }

@@ -60,7 +60,7 @@ public class Models
 
     public void ImportNoPredefs<T>(Func<string, T> defaultConstructor,
         DepotImporter importer)
-        where T : Model, new()
+        where T : Model
     {
         var models = importer
             .MakeSheetObjectsModels<T>(new Dictionary<string, object>(), 

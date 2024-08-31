@@ -40,29 +40,29 @@ public partial class CameraController : Camera2D, IClientComponent
     public void Process(float delta)
     {
         var mult = 1f;
-        if (Input.IsKeyPressed( Godot.Key.Shift)) mult = 3f;
-        if(Input.IsKeyPressed(Godot.Key.W))
+        if (Godot.Input.IsKeyPressed( Godot.Key.Shift)) mult = 3f;
+        if(Godot.Input.IsKeyPressed(Godot.Key.W))
         {
             Position += Vector2.Up * delta / Zoom * _scrollSpeed * mult;
         }
-        if(Input.IsKeyPressed(Godot.Key.S))
+        if(Godot.Input.IsKeyPressed(Godot.Key.S))
         {
             Position += Vector2.Down * delta / Zoom * _scrollSpeed * mult;
         }
-        if(Input.IsKeyPressed(Godot.Key.A))
+        if(Godot.Input.IsKeyPressed(Godot.Key.A))
         {
             Position += Vector2.Left * delta / Zoom * _scrollSpeed * mult;
         }
-        if(Input.IsKeyPressed(Godot.Key.D))
+        if(Godot.Input.IsKeyPressed(Godot.Key.D))
         {
             Position += Vector2.Right * delta / Zoom * _scrollSpeed * mult;
         }
         
-        if(Input.IsKeyPressed(Godot.Key.Z))
+        if(Godot.Input.IsKeyPressed(Godot.Key.Z))
         {
             UpdateZoom(true);
         }
-        if(Input.IsKeyPressed(Godot.Key.X))
+        if(Godot.Input.IsKeyPressed(Godot.Key.X))
         {
             UpdateZoom(false);
         }

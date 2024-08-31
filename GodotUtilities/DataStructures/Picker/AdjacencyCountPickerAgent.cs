@@ -4,6 +4,7 @@ public class AdjacencyCountPickerAgent<T> : IPickerAgent<T>
 {
     public HashSet<T> Seeds { get; private set; }
     public HashSet<T> Picked { get; private set; }
+    //todo remake as maxheap
     public Dictionary<T, int> Adjacents { get; private set; }
     private Func<T, bool> _valid;
     public int NumToPick { get; private set; }
