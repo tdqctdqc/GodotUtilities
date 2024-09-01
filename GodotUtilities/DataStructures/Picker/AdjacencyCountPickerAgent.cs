@@ -18,8 +18,8 @@ public class AdjacencyCountPickerAgent<T> : IPickerAgent<T>
         NumToPick = numToPick;
         Picked = new HashSet<T>();
         Adjacents = new SimplePriorityQueue<T>();
-        host.AddAgent(this);
         Add(seed, host);
+        host.AddAgent(this);
     }
 
     public IEnumerable<T> Pick(Picker<T> host)
@@ -42,7 +42,7 @@ public class AdjacencyCountPickerAgent<T> : IPickerAgent<T>
     protected void Add(T t, Picker<T> host)
     {
         Picked.Add(t);
-        Adjacents.Remove(t);
+        if(Adjacents.Contains(t)) Adjacents.Remove(t);
         
         foreach (var n in host.GetNeighbors(t))
         {

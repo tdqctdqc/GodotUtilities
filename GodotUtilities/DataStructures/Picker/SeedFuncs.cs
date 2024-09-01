@@ -25,7 +25,6 @@ public static class SeedFuncs
                          && ts.Contains(n)
                          && hash.Contains(n));
                 hash.ExceptWith(flood);
-                ts.Remove(t);
             }
                 
             return l;

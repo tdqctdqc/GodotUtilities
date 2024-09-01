@@ -95,10 +95,9 @@ public static class TreeAggregator
         
         while(picker.NotTaken.Count > 0)
         {
-            // GD.Print("iter " + picker.NotTaken.Count);
             var seeds = seedFactory(picker.NotTaken).ToArray();
-            // GD.Print("seeds " + seeds.Length);
-            
+
+            picker.NotTaken.ExceptWith(seeds);
             foreach (var seed in seeds)
             {
                 var agent = agentFactory(seed);

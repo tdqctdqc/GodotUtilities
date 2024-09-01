@@ -123,6 +123,12 @@ public class Branch<T>
         if (depth == 0) return this;
         return TrunkSeed.GetTrunkSeedAtDepth(depth - 1);
     }
+
+    public IEnumerable<Branch<T>> GetBranchesAtDepth(int depth)
+    {
+        if (depth == 0) return this.Yield();
+        return Children.SelectMany(c => c.GetBranchesAtDepth(depth - 1));
+    }
     
     public void SetSeed(T seed)
     {

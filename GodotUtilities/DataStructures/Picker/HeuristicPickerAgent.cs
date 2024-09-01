@@ -31,7 +31,7 @@ public class HeuristicPickerAgent<T> : IPickerAgent<T>
     {
         var had = Picked.Count;
         var taken = 0;
-        while (Candidates.Any() && taken < NumToPick)
+        while (Candidates.Count > 0 && taken < NumToPick)
         {
             var t = Candidates.Dequeue();
             if (host.NotTaken.Contains(t) && _valid(t))

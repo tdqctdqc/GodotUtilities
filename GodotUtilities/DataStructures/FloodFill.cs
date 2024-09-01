@@ -250,6 +250,40 @@ public static class FloodFill<T>
 
         return res;
     }
+    
+    public static T FindFirst(T start, 
+        Func<T, bool> validNeighbor,
+        Func<T, IEnumerable<T>> getNeighbors,
+        Func<T, bool> validResult,
+        int maxIter = 1_000)
+    {
+        var queue = new Queue<T>();
+        var covered = new HashSet<T>{start};
+        queue.Enqueue(start);
+        int iter = 0;
+        while (queue.TryDequeue(out var curr))
+        {
+            iter++;
+            if (iter == maxIter) break;
+            var neighbors = getNeighbors(curr);
+            foreach (var neighbor in neighbors)
+            {
+                if (validResult(neighbor))
+                {
+                    return neighbor;
+                }
+                if (covered.Contains(neighbor)) continue;
+                covered.Add(neighbor);
+                if (validNeighbor(neighbor) == false)
+                {
+                    continue;
+                }
+                queue.Enqueue(neighbor);
+            }
+        }
+
+        throw new Exception();
+    }
 
     public static HashSet<T> FloodFillTilAllFoundMultipleStarts
     (IEnumerable<T> starts, 
