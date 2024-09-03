@@ -8,9 +8,8 @@ public abstract class Model
 {
     public string Name { get; protected set; }
 
-    protected Model(string name)
+    protected Model()
     {
-        Name = name;
     }
 
 

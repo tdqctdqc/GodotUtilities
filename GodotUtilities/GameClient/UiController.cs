@@ -18,6 +18,7 @@ public partial class UiController : Node, IClientComponent
         Disconnect += () => throw new Exception();
         var modes = new List<UiMode>
         {
+            
         };
         var names = modes.Select(m => m.GetType().Name).ToList();
         ModeOption = new ListSettingsOption<UiMode>("Ui Mode",

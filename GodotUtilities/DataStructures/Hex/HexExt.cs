@@ -59,6 +59,11 @@ public static class HexExt
             }
         }
     }
+
+    public static Vector2 GetWorldPos(this Vector3I coords)
+    {
+        return coords.CubeToGridCoords().GetWorldPos();
+    }
     
     public static Vector2 GetWorldPos(
         this Vector2I gridCoords)

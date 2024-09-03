@@ -27,48 +27,4 @@ public class Models
         return ModelsByName.Values.OfType<TModel>();
     }
     
-    public void ImportWithPredefsAllowDefault<T>(
-        Dictionary<string, T> predefs,
-        Func<string, T> defaultConstructor,
-        DepotImporter importer)
-        where T : Model
-    {
-        ImportWithPredefs(predefs, defaultConstructor, importer);
-    }
-    public void ImportWithPredefsDisallowDefault<T>(Dictionary<string, T> predefs,
-        DepotImporter importer)
-        where T : Model
-    {
-        ImportWithPredefs(predefs, n => throw new Exception(), importer);
-    }
-    
-    private void ImportWithPredefs<T>(Dictionary<string, T> predefs,
-        Func<string, T> defaultConstructor,
-        DepotImporter importer) 
-        where T : Model
-    {
-        var ms = predefs
-            .ToDictionary(t => t.Key,
-                t => (object)t);
-        var models = importer
-            .MakeSheetObjectsModels<T>(ms, defaultConstructor);
-        foreach (var model in models)
-        {
-            AddModel(model);
-        }
-    }
-
-    public void ImportNoPredefs<T>(Func<string, T> defaultConstructor,
-        DepotImporter importer)
-        where T : Model
-    {
-        var models = importer
-            .MakeSheetObjectsModels<T>(new Dictionary<string, object>(), 
-                defaultConstructor);
-        foreach (var model in models)
-        {
-            AddModel(model);
-        }
-    }
-    
 }

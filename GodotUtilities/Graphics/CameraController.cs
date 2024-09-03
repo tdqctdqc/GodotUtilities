@@ -11,7 +11,7 @@ namespace GodotUtilities.Graphics;
 public partial class CameraController : Camera2D, IClientComponent
 {
     private float _zoomLevel;
-    private float _maxZoom = 50f, _minZoom = 1f;
+    private float _maxZoom = 100f, _minZoom = 1f;
     private float _zoomIncr = .1f;
     private float _scrollSpeed = 500f;
     public Node Node => this;

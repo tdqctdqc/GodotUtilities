@@ -10,6 +10,11 @@ public readonly struct ERef<TEntity> : IIdRef<TEntity>
 {
     public int Id { get; }
 
+    public static bool operator ==(ERef<TEntity> r, TEntity e)
+        => r.Id == e.Id;
+    public static bool operator !=(ERef<TEntity> r, TEntity e) 
+        => !(r == e);
+
     public ERef()
     {
         Id = -1;

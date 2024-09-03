@@ -18,6 +18,11 @@ public class ListSettingsOption<T> : SettingsOption<T>
         }
     }
 
+    public void AddOption(T t, string name)
+    {
+        Options.Add(t);
+        _names.Add(t, name);
+    }
     public TOption Choose<TOption>() where TOption : T
     {
         var first = Options.OfType<TOption>().First();
