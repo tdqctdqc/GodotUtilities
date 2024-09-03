@@ -5,18 +5,13 @@ namespace GodotUtilities.GameData;
 
 public abstract class ModelImporter
 {
-    private string _path;
+    protected string _path;
 
     protected ModelImporter(string path)
     {
         _path = path;
     }
 
-    public void SetupModels(Models models)
-    {
-        var importer = new DepotImporter(_path);
-        SetupModelsSpecific(models, importer);
-    }
 
-    protected abstract void SetupModelsSpecific(Models models, DepotImporter importer);
+    public abstract void Import(Models models);
 }

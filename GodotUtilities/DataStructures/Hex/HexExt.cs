@@ -5,6 +5,7 @@ namespace GodotUtilities.DataStructures.Hex;
 
 public static class HexExt
 {
+    public const float HexHeight = 0.866025f;
     public static Vector3I North {get; private set;} = new Vector3I(0,1,-1);
     public static Vector3I NorthEast {get; private set;} = new Vector3I(1,0,-1); 
     public static Vector3I SouthEast {get; private set;} = new Vector3I(1,-1,0); 

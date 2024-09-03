@@ -20,7 +20,7 @@ public class Data(IdDispenser idDispenser, Entities entities,
 
     public static void SetupForHost(Data d, ModelImporter modelImporter)
     {
-        modelImporter.SetupModels(d.Models);
+        modelImporter.Import(d.Models);
         var register = new ModelIdRegister(d.IdDispenser.TakeId(),
             new Dictionary<int, string>(),
             new Dictionary<string, int>());
@@ -33,14 +33,14 @@ public class Data(IdDispenser idDispenser, Entities entities,
     }
     public static void SetupForRemote(Data d, ModelImporter modelImporter)
     {
-        modelImporter.SetupModels(d.Models);
+        modelImporter.Import(d.Models);
     }
     public static void SetupForLoad(Data d, string path, ModelImporter modelImporter)
     {
         var saveFile = Loader<SaveFile>.Load(path, d.Serializer);
         d.IdDispenser = saveFile.IdDispenser;
         d.Entities = saveFile.Entities;
-        modelImporter.SetupModels(d.Models);
+        modelImporter.Import(d.Models);
     }
 
     public void SetEntitySingleton<T>() where T : Entity

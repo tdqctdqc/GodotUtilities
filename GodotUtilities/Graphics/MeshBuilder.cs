@@ -233,6 +233,7 @@ public class MeshBuilder
         if (TriVertices.Count == 0) return new MeshInstance2D();
         var mesh = MeshGenerator.GetArrayMesh(
             TriVertices.ToArray(), 
+            null,
             Colors.ToArray());
         var meshInstance = new MeshInstance2D();
         meshInstance.Mesh = mesh;
@@ -245,6 +246,7 @@ public class MeshBuilder
         if (TriVertices.Count == 0) return null;
         var mesh = MeshGenerator.GetArrayMesh(
             TriVertices.ToArray(), 
+            null,
             Colors.ToArray());
         return mesh;
     }

@@ -52,7 +52,7 @@ public static class MeshGenerator
             (Vector2.Left + Vector2.Down) * size / 2f,
         };
         var triColors = triPoints.Select(t => color).ToArray();
-        return GetArrayMesh(triPoints, triColors);
+        return GetArrayMesh(triPoints, null, triColors);
     }
 
     public static MeshInstance2D GetCircleMesh(Vector2 center, float radius, int resolution)
@@ -102,30 +102,29 @@ public static class MeshGenerator
         }
         return node;
     }
-    public static ArrayMesh GetArrayMesh(Vector2[] triPoints, 
-        Color[] triColors)
+    public static ArrayMesh GetArrayMesh(Vector2[] triPoints,
+        Vector2[]? uvs = null,
+        Color[]? colors = null)
     {
         var arrayMesh = new ArrayMesh();
         var arrays = new Godot.Collections.Array();
         
         arrays.Resize((int)ArrayMesh.ArrayType.Max);
 
-        arrays[(int)ArrayMesh.ArrayType.Vertex] = triPoints;
-        arrays[(int)ArrayMesh.ArrayType.Color] = triColors; 
-        arrayMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, arrays);
+        arrays[(int)Mesh.ArrayType.Vertex] = triPoints;
+        // var triColors = Enumerable.Range(0, triPoints.Length).Select(i => Colors.White).ToArray();
 
-        return arrayMesh; 
-    }
-    public static ArrayMesh GetArrayMesh(Vector2[] triPoints)
-    {
-        var arrayMesh = new ArrayMesh();
-        var arrays = new Godot.Collections.Array();
+        if (uvs is not null)
+        {
+            arrays[(int)Mesh.ArrayType.TexUV] = uvs;
+        }
         
-        arrays.Resize((int)ArrayMesh.ArrayType.Max);
-
-        arrays[(int)ArrayMesh.ArrayType.Vertex] = triPoints;
-        var triColors = Enumerable.Range(0, triPoints.Length).Select(i => Colors.White).ToArray();
-        arrays[(int)ArrayMesh.ArrayType.Color] = triColors; 
+        if (colors is not null)
+        {
+            arrays[(int)ArrayMesh.ArrayType.Color] = colors;
+        }
+        
+        
         arrayMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, arrays);
 
         return arrayMesh; 
