@@ -55,5 +55,9 @@ public class Data(IdDispenser idDispenser, Entities entities,
         if (Singletons.TryGetValue(type, out var singleton)) throw new Exception();
         Singletons.Add(type, t);
     }
-    
+
+    public T GetSingleton<T>()
+    {
+        return (T)Singletons[typeof(T)];
+    }
 }

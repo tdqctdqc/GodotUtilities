@@ -21,7 +21,7 @@ public abstract class MouseAction : IMouseAction
     }
     public void Process(InputEventMouse m)
     {
-        var pressed = Pressed(m);
+        var pressed = MaskFit(m);
         if (_mouseDown && pressed)
         {
             MouseHeld(m);
@@ -37,9 +37,6 @@ public abstract class MouseAction : IMouseAction
             SetAuxButton(m);
             _mouseDown = true;
             MouseDown(m);
-        }
-        else if(_mouseDown == false && pressed == false)
-        {
         }
     }
 
@@ -87,7 +84,7 @@ public abstract class MouseAction : IMouseAction
     {
         _shiftReleaseAction += action;
     }
-    private bool Pressed(InputEventMouse m)
+    public bool MaskFit(InputEventMouse m)
     {
         return (m.ButtonMask & _button) != 0;
     }

@@ -25,15 +25,28 @@ public class GameClient : Node
         var canvas = new CanvasLayer();
         UiLayer = new Control();
         canvas.AddChild(UiLayer);
-        UiLayer.MouseFilter = Control.MouseFilterEnum.Stop;
+        UiLayer.MouseFilter = Control.MouseFilterEnum.Pass;
         UiLayer.FocusMode = Control.FocusModeEnum.None;
         AddChild(canvas);
         GraphicsLayer = new Node2D();
         AddChild(GraphicsLayer);
-        AddComponent(new TooltipManager());
+        var tooltip = new TooltipManager();
+        AddComponent(tooltip);
+        tooltip.MouseFilter = Control.MouseFilterEnum.Pass;
+        tooltip.FocusMode = Control.FocusModeEnum.None;
         UiController = new UiController();
         AddComponent(UiController);
+        var frame = new UiFrame();
+        AddComponent(frame);
+        frame.MouseFilter = Control.MouseFilterEnum.Pass;
+        frame.FocusMode = Control.FocusModeEnum.None;
     }
+
+    public override void _Input(InputEvent @event)
+    {
+        UiController.Mode?.HandleInput(@event);
+    }
+
     public override void _Process(double delta)
     {
         _uiTickTimer.Process(delta);

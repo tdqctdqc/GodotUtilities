@@ -4,7 +4,17 @@ namespace GodotUtilities.Graphics;
 
 public static class MeshBuilderExt
 {
-    
+    public static void DrawBox(this MeshBuilder mb,
+        Vector2 topLeft, Vector2 bottomRight, Color color,
+        float thickness)
+    {
+        var topRight = new Vector2(bottomRight.X, topLeft.Y);
+        var bottomLeft = new Vector2(topLeft.X, bottomRight.Y);
+        mb.AddLine(topLeft, topRight, color, thickness);
+        mb.AddLine(topLeft, bottomLeft, color, thickness);
+        mb.AddLine(topRight, bottomRight, color, thickness);
+        mb.AddLine(bottomLeft, bottomRight, color, thickness);
+    }
     
     public static void DrawPolygonOutline(this MeshBuilder mb,
         Vector2[] boundaryPoints, float thickness, Color color)

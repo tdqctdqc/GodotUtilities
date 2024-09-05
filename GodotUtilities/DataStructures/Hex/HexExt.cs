@@ -15,6 +15,12 @@ public static class HexExt
     
     public static List<Vector3I> HexDirs { get; private set; }
         = [ North, NorthEast, SouthEast, South, SouthWest, NorthWest ];
+
+    public static List<Vector2> HexRadii { get; private set; }
+        = [ Vector2.Up.Rotated(Mathf.Pi / 6f), Vector2.Up.Rotated(3f * Mathf.Pi / 6f),
+            Vector2.Up.Rotated(5f * Mathf.Pi / 6f), Vector2.Up.Rotated(7f * Mathf.Pi / 6f),
+            Vector2.Up.Rotated(9f * Mathf.Pi / 6f), Vector2.Up.Rotated(11f * Mathf.Pi / 6f), ];
+
     
 
     public static IEnumerable<Vector3I> GetNeighbors(
@@ -114,6 +120,22 @@ public static class HexExt
     public static Vector3I GetCubeCoordFromKey(this long key)
     {
         return key.GetGridCoordFromKey().GridCoordsToCube();
+    }
+
+    public static bool IsPointInHex(Vector2 p, Vector2 hexPos, float radius)
+    {
+        return TriangleExt.ContainsPoint(Vector2.Zero,
+                   hexPos + HexRadii[0] * radius, hexPos + HexRadii[1] * radius, p)
+               || TriangleExt.ContainsPoint(Vector2.Zero,
+                   hexPos + HexRadii[1] * radius, hexPos + HexRadii[2] * radius, p)
+               || TriangleExt.ContainsPoint(Vector2.Zero,
+                   hexPos + HexRadii[2] * radius, hexPos + HexRadii[3] * radius, p)
+               || TriangleExt.ContainsPoint(Vector2.Zero,
+                   hexPos + HexRadii[3] * radius, hexPos + HexRadii[4] * radius, p)
+               || TriangleExt.ContainsPoint(Vector2.Zero,
+                   hexPos + HexRadii[4] * radius, hexPos + HexRadii[5] * radius, p)
+               || TriangleExt.ContainsPoint(Vector2.Zero,
+                   hexPos + HexRadii[5] * radius, hexPos + HexRadii[0] * radius, p);
     }
     
 }
