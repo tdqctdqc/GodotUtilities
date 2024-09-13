@@ -1,11 +1,15 @@
 using System.Collections.Concurrent;
 using Godot;
 using GodotUtilities.DataStructures.RefAction;
+using GodotUtilities.Logic;
+using GodotUtilities.Server;
 
 namespace GodotUtilities.GameClient;
 
 public class GameClient : Node
 {
+    public Guid PlayerGuid { get; private set; }
+    protected ILogic _logic;
     public ClientCallbacks Callbacks { get; private set; }
     public Control UiLayer { get; private set; }
     public Dictionary<Type, IClientComponent> Components { get; private set; }
@@ -14,9 +18,12 @@ public class GameClient : Node
     private TimerAction _uiTickTimer;
     public RefAction UiTick { get; private set; }
     public UiController UiController { get; private set; }
-
-    public GameClient()
+    public WindowHolder WindowHolder { get; private set; }
+    public GameClient(ILogic logic, Guid playerGuid)
     {
+        _logic = logic;
+        _logic.MessageForLocalClient += HandleMessageForClient;
+        PlayerGuid = playerGuid;
         UiTick = new RefAction();
         _uiTickTimer = new TimerAction(.1f, 0f, UiTick.Invoke);
         Callbacks = new ClientCallbacks();
@@ -27,6 +34,8 @@ public class GameClient : Node
         canvas.AddChild(UiLayer);
         UiLayer.MouseFilter = Control.MouseFilterEnum.Pass;
         UiLayer.FocusMode = Control.FocusModeEnum.None;
+        WindowHolder = new WindowHolder(this);
+        
         AddChild(canvas);
         GraphicsLayer = new Node2D();
         AddChild(GraphicsLayer);
@@ -47,8 +56,14 @@ public class GameClient : Node
         UiController.Mode?.HandleInput(@event);
     }
 
+    public void SubmitCommand(Command c)
+    {
+        c.SetCommandingPlayer(PlayerGuid);
+        _logic.HandleMessageFromClient(c);
+    }
     public override void _Process(double delta)
     {
+        _logic.Process(delta);
         _uiTickTimer.Process(delta);
         var values = Components.Values.ToList();
         
@@ -61,6 +76,16 @@ public class GameClient : Node
             u.Invoke();
         }
     }
+
+    private void HandleMessageForClient(Message m)
+    {
+        if (m is ClientMessage cm)
+        {
+            cm.Handle(this);
+        }
+        else throw new Exception($"client couldnt handle message of type {m.GetType()}");
+    }
+    
     public Guid GetPlayerGuid()
     {
         return default;

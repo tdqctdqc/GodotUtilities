@@ -101,4 +101,11 @@ public static Color GetColor(int index)
         var b = c.B + (target.B - c.B) * ratio;
         return new Color(r, g, b);
     }
+
+    public static Color GetHealthColor(float f)
+    {
+        if (f < 0f || f > 1f) throw new Exception();
+        if(f == 0f) return Colors.Gray;
+        return Colors.Red.Lerp(Colors.Green, f);
+    }
 }

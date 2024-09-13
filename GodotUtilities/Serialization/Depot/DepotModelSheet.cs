@@ -76,11 +76,15 @@ public class DepotModelSheet
         foreach (var (propertyName, value) in Columns)
         {
             if (propertyName == "Model") continue;
-            var propertyType = Type.GetProperty(propertyName).PropertyType;
 
+            var propertyType = Type.GetProperty(propertyName).PropertyType;
             fillColumnProperty.InvokeGeneric(this,
                 new[] { propertyType },
                 new[] { importer, ob, line, propertyName });
+            
+            
+
+            
         }
     }
 

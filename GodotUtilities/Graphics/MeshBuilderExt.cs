@@ -38,4 +38,10 @@ public static class MeshBuilderExt
             mb.AddTri(p1, p2, p3, color);
         }
     }
+
+    public static void DrawHex(this MeshBuilder mb,
+        Vector2 center, float radius, Color color)
+    {
+        
+    }
 }

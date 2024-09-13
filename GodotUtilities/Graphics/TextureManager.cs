@@ -24,4 +24,8 @@ public static class TextureManager
     {
         return Textures[model.Name.ToLower()];
     }
+    public static Texture2D GetTexture(string name)
+    {
+        return Textures[name.ToLower()];
+    }
 }

@@ -57,6 +57,19 @@ public static class DepotUnpacker
                     entryType.Yield().ToArray(),
                     new object[] { importer, value, "Value" });
         }
+        if (propertyType.IsGenericType 
+            && propertyType.GetGenericTypeDefinition() 
+            == typeof(Dictionary<,>))
+        {
+            var keyType = propertyType.GetGenericArguments()[0];
+            var valueType = propertyType.GetGenericArguments()[1];
+            var mi = typeof(DepotUnpacker).GetMethod(nameof(UnpackDictionary),
+                BindingFlags.Public | BindingFlags.Static);
+            return (TProperty) mi
+                .InvokeGeneric(null, 
+                    new []{ keyType, valueType },
+                    new object[] { importer, value, "Key", "Value" });
+        }
         if (typeof(Array).IsAssignableFrom(propertyType))
         {
             var entryType = propertyType.GetElementType();
@@ -81,11 +94,37 @@ public static class DepotUnpacker
         return UnpackEnumerable<TValue>(importer, list, columnName)
             .ToArray();
     }
-    public static HashSet<TValue> UnpackHashSet<TValue>(DepotImporter importer, JsonArray list,
+    public static HashSet<TValue> UnpackHashSet<TValue>(
+        DepotImporter importer, 
+        JsonArray list,
         string columnName)
     {
         return UnpackEnumerable<TValue>(importer, list, columnName)
             .EnumerableToHashSet();
+    }
+
+    public static Dictionary<TKey, TValue> UnpackDictionary<TKey, TValue>(
+        DepotImporter importer,
+        JsonArray list,
+        string keyColumnName,
+        string valueColumnName)
+    {
+        var keys = UnpackEnumerable<TKey>(importer, list, keyColumnName)
+            .GetEnumerator();
+        var values = UnpackEnumerable<TValue>(importer, list, valueColumnName)
+            .GetEnumerator();
+        var res = new Dictionary<TKey, TValue>();
+        while (true)
+        {
+            var haveKey = keys.MoveNext();
+            var haveValue = values.MoveNext();
+            if (haveKey != haveValue) throw new Exception();
+            if (haveKey == false) break;
+            res.Add(keys.Current, values.Current);
+        }
+        keys.Dispose();
+        values.Dispose();
+        return res;
     }
     
     public static IEnumerable<TValue> UnpackEnumerable<TValue>(

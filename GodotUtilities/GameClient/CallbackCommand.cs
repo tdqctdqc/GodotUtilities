@@ -1,17 +1,19 @@
 
 using System;
 using Godot;
+using GodotUtilities.Logic;
+
 namespace GodotUtilities.GameClient;
 using GodotUtilities.GameData;
 using GodotUtilities.Server;
 using MessagePack;
 
-public class CallbackCommand : Message
+public class CallbackCommand : Command
 {
-    public Message Inner { get; private set; }
+    public Command Inner { get; private set; }
     public int CallbackId { get; private set; }
 
-    public static CallbackCommand Construct(Message inner, 
+    public static CallbackCommand Construct(Command inner, 
         Action callback,
         GameClient c)
     {
@@ -20,15 +22,17 @@ public class CallbackCommand : Message
     }
     [SerializationConstructor] private CallbackCommand(
         Guid commandingPlayerGuid,
-        Message inner,
+        Command inner,
         int callbackId)
     {
         Inner = inner;
         CallbackId = callbackId;
     }
 
-    public override void Handle()
+
+    public override void Handle(LogicKey key)
     {
-        Inner.Handle();
+        Inner.Handle(key);
+        key.SendMessageToClient(new DoClientCallbackMessage(CallbackId, CommandingPlayerGuid));
     }
 }

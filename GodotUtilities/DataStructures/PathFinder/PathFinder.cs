@@ -71,6 +71,7 @@ public static class PathFinder<T>
             foreach (var n in getNeighbors(current.Element))
             {
                 var edgeCost = getEdgeCost(current.Element, n);
+                if (float.IsPositiveInfinity(edgeCost)) continue;
                 if (nodes.ContainsKey(n) == false)
                 {
                     addNode(n);
@@ -111,6 +112,78 @@ public static class PathFinder<T>
                 open.Enqueue(node, node.CostFromStart + node.HeuristicCost);
             }
         }
+    }
+
+
+    public static HashSet<T> FloodFill(T start, Func<T, IEnumerable<T>> getNeighbors,
+        Func<T, T, float> getEdgeCost, float maxCost)
+    {
+        var res = new HashSet<T>();
+        var open = new SimplePriorityQueue<T, float>();
+        open.Enqueue(start, 0f);
+        while (open.Count > 0)
+        {
+            var top = open.First;
+            var cost = open.GetPriority(top);
+            open.Dequeue();
+            res.Add(top);
+            foreach (var n in getNeighbors(top))
+            {
+                var edgeCost = getEdgeCost(top, n);
+                var newCost = cost + edgeCost;
+                if (newCost > maxCost) continue;
+                if (open.Contains(n))
+                {
+                    var nCost = open.GetPriority(n);
+                    if (newCost < nCost)
+                    {
+                        open.UpdatePriority(n, newCost);
+                    }
+                }
+                else
+                {
+                    open.Enqueue(n, newCost);
+                }
+            }
+        }
+
+        return res;
+    }
+    
+    
+    public static Dictionary<T, float> FloodFillGetCosts(T start, Func<T, IEnumerable<T>> getNeighbors,
+        Func<T, T, float> getEdgeCost, float maxCost)
+    {
+        var res = new Dictionary<T, float>();
+        var open = new SimplePriorityQueue<T, float>();
+        open.Enqueue(start, 0f);
+        while (open.Count > 0)
+        {
+            var top = open.First;
+            var cost = open.GetPriority(top);
+            open.Dequeue();
+            res[top] = cost;
+            foreach (var n in getNeighbors(top))
+            {
+                var edgeCost = getEdgeCost(top, n);
+                var newCost = cost + edgeCost;
+                if (newCost > maxCost) continue;
+                if (open.Contains(n))
+                {
+                    var nCost = open.GetPriority(n);
+                    if (newCost < nCost)
+                    {
+                        open.UpdatePriority(n, newCost);
+                    }
+                }
+                else
+                {
+                    open.Enqueue(n, newCost);
+                }
+            }
+        }
+
+        return res;
     }
     
     

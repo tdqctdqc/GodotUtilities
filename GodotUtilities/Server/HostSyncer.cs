@@ -29,11 +29,11 @@ public class HostSyncer : Syncer
     {
         foreach (var e in entities)
         {
-            var u = new EntityCreationMessage(e);
+            var u = new EntityCreationProcedure(e);
             QueuePacket(_serializer.Serialize(u));
         }
         
-        var done = new FinishedStateSyncUpdate(newPlayer);
+        var done = new FinishedSyncProcedure(newPlayer);
         var bytes = _serializer.Serialize(done);
         QueuePacket(bytes);
         PushPackets();

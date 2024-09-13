@@ -2,18 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using GodotUtilities.GameData;
+using GodotUtilities.Logic;
+
 namespace GodotUtilities.Server;
 
-public class FinishedStateSyncUpdate : Message
+public class FinishedSyncProcedure : Procedure
 {
     public Guid PlayerGuid { get; private set; }
-    public FinishedStateSyncUpdate(Guid playerGuid) : base()
+    public FinishedSyncProcedure(Guid playerGuid) : base()
     {
         PlayerGuid = playerGuid;
     }
 
-    public override void Handle()
+    public override void Handle(ProcedureKey key)
     {
-        // key.Data.ClientPlayerData.SetLocalPlayerGuid(PlayerGuid);
     }
 }

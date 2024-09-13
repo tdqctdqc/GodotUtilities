@@ -15,7 +15,7 @@ public static class HexExt
     
     public static List<Vector3I> HexDirs { get; private set; }
         = [ North, NorthEast, SouthEast, South, SouthWest, NorthWest ];
-
+    
     public static List<Vector2> HexRadii { get; private set; }
         = [ Vector2.Up.Rotated(Mathf.Pi / 6f), Vector2.Up.Rotated(3f * Mathf.Pi / 6f),
             Vector2.Up.Rotated(5f * Mathf.Pi / 6f), Vector2.Up.Rotated(7f * Mathf.Pi / 6f),

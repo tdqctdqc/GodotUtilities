@@ -65,36 +65,7 @@ public static class FloodFill<T>
 
         return res;
     }
-    public static HashSet<T> FloodFillHeuristicToLimitQueue(T seed,
-        int limit,
-        Func<T, IEnumerable<T>> getNeighbors,
-        Func<T, bool> valid,
-        Func<T, T, float> heuristic)
-    {
-        var res = new HashSet<T> { };
-        var open = new SimplePriorityQueue<T, float>();
-        open.Enqueue(seed, heuristic(seed, seed));
-        while (open.Count > 0 && res.Count < limit)
-        {
-            var curr = open.Dequeue();
-            if (valid(curr) == false) continue;
-            res.Add(curr);
-            foreach (var n in getNeighbors(curr))
-            {
-                if (res.Contains(n)
-                    || open.Contains(n)
-                    || valid(n) == false)
-                {
-                    continue;
-                }
-
-                var dist = heuristic(n, seed);
-                open.Enqueue(n, dist);
-            }
-        }
-
-        return res;
-    }
+    
     public static HashSet<T> FloodFillToLimit(T seed,
         int limit,
         Func<T, IEnumerable<T>> getNeighbors,
@@ -164,6 +135,47 @@ public static class FloodFill<T>
         return res;
     }
     
+    public static T FloodFillToRadiusTilFirst(T seed,
+        int radius,
+        Func<T, IEnumerable<T>> getNeighbors,
+        Func<T, bool> valid, out HashSet<T> flood,
+        out int distance)
+    {
+        var last = new List<T> { seed };
+        var res = new HashSet<T> { seed };
+        flood = res;
+        var lastAddition = 1;
+        distance = 0;
+        for (var i = 0; i < radius; i++)
+        {
+            distance = i + 1;
+            var thisAddition = 0;
+            var count = last.Count;
+            for (int j = count - lastAddition; j < count; j++)
+            {
+                var t = last[j];
+                foreach (var n in getNeighbors(t))
+                {
+                    if (res.Contains(n) == false && valid(n))
+                    {
+                        last.Add(n);
+                        res.Add(n);
+                        thisAddition++;
+                        if (valid(n))
+                        {
+                            return n;
+                        }
+                    }
+                }
+            }
+
+            if (thisAddition == 0) return default;
+            lastAddition = thisAddition;
+        }
+
+        return default;
+    }
+    
     public static Dictionary<T, List<T>> FloodFillMultiple
     (IEnumerable<T> seeds, Func<T, IEnumerable<T>> getNs,
         Func<T, T, float> getHeuristic,
@@ -220,14 +232,16 @@ public static class FloodFill<T>
         return res;
     }
 
-    public static HashSet<T> FloodTilFirst(T start, 
+    public static T FloodTilFirst(T start, 
         Func<T, bool> validNeighbor,
         Func<T, IEnumerable<T>> getNeighbors,
         Func<T, bool> validResult,
+        out HashSet<T> flood,
         int maxIter = 1_000)
     {
         var res = new HashSet<T>{start};
         var queue = new Queue<T>();
+        flood = res;
         queue.Enqueue(start);
         int iter = 0;
         while (queue.TryDequeue(out var curr))
@@ -237,18 +251,19 @@ public static class FloodFill<T>
             var neighbors = getNeighbors(curr);
             foreach (var neighbor in neighbors)
             {
-                if (validResult(neighbor))
-                {
-                    return res;
-                }
+                
                 if (res.Contains(neighbor)) continue;
                 if (validNeighbor(neighbor) == false) continue;
                 queue.Enqueue(neighbor);
                 res.Add(neighbor);
+                if (validResult(neighbor))
+                {
+                    return neighbor;
+                }
             }
         }
 
-        return res;
+        return default;
     }
     
     public static T FindFirst(T start, 

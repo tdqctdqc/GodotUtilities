@@ -1,10 +1,13 @@
 using Godot;
 using GodotUtilities.Serialization;
 using GodotUtilities.GameData;
+using GodotUtilities.Logic;
+
 namespace GodotUtilities.Server;
 
-public abstract partial class HostServer : Node
+public  partial class HostServer : Node
 {
+    private ILogic _logic;
     private Entities _entities;
     private List<HostSyncer> _peers;
     private Dictionary<Guid, HostSyncer> _peersByGuid;
@@ -12,9 +15,10 @@ public abstract partial class HostServer : Node
     private TcpServer _tcp;
     private int _port = 3306;
 
-    public HostServer(Entities entities)
+    public HostServer(Entities entities, ILogic logic)
     {
         _entities = entities;
+        _logic = logic;
         _peers = new List<HostSyncer>();
         _peersByGuid = new Dictionary<Guid, HostSyncer>();
         _tcp = new TcpServer();
@@ -45,14 +49,6 @@ public abstract partial class HostServer : Node
         _peers.Add(syncer);
         _peersByGuid.Add(newPlayer, syncer);
     }
-    public void QueueMessage(Message m)
-    {
-        var bytes = _serializer.Serialize(m);
-        for (var i = 0; i < _peers.Count; i++)
-        {
-            _peers[i].QueuePacket(bytes);
-        }
-    }
     public void SendMessageToClient(Message m, Guid clientGuid)
     {
         var bytes = _serializer.Serialize(m);
@@ -70,5 +66,9 @@ public abstract partial class HostServer : Node
     {
         _peers.ForEach(p => p.PushPackets());
     }
-    protected abstract void HandleIncomingMessage(Message m);
+
+    protected void HandleIncomingMessage(Message m)
+    {
+        _logic.HandleMessageFromServer(m);
+    }
 }
