@@ -15,14 +15,10 @@ public partial class UiFrame : VBoxContainer,
 
     public void Connect(GameClient client)
     {
-        MouseFilter = MouseFilterEnum.Ignore;
         this.FullRect();
-        
         TopBars = new VBoxContainer();
-        TopBars.MouseFilter = MouseFilterEnum.Stop;
         AddChild(TopBars);
         var sidebars = new HBoxContainer();
-        sidebars.MouseFilter = MouseFilterEnum.Ignore;
         AddChild(sidebars);
 
         sidebars.SetAnchorsPreset(LayoutPreset.HcenterWide);
@@ -30,18 +26,15 @@ public partial class UiFrame : VBoxContainer,
             
         LeftBar = MultiBar.MakeVertical();
         LeftBar.SetAnchorsPreset(LayoutPreset.LeftWide);
-        LeftBar.MouseFilter = MouseFilterEnum.Stop;
         sidebars.AddChild(LeftBar);
         var filler = new Control();
         filler.GrowHorizontal = GrowDirection.Both;
         filler.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-        filler.MouseFilter = MouseFilterEnum.Ignore;
         sidebars.AddChild(filler);
         
         
         RightSidebar = new VBoxContainer();
         RightSidebar.SetAnchorsPreset(LayoutPreset.RightWide);
-        RightSidebar.MouseFilter = MouseFilterEnum.Stop;
         sidebars.AddChild(RightSidebar);
         client.UiLayer.AddChild(this);
     }
@@ -59,6 +52,14 @@ public partial class UiFrame : VBoxContainer,
     public void AddTopBar(Node topBar)
     {
         TopBars.AddChild(topBar);
+    }
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        GD.Print("ui frame getting unhandled input");
+    }
+    public override void _Input(InputEvent @event)
+    {
+        GD.Print("ui frame getting input");
     }
     Node IClientComponent.Node => this;
 }

@@ -113,7 +113,48 @@ public static class PathFinder<T>
             }
         }
     }
+    
 
+    public static T FindClosest(T start, Func<T, IEnumerable<T>> getNeighbors,
+        Func<T, T, float> getEdgeCost, Func<T, bool> result, out float costToClosest)
+    {
+        var res = new HashSet<T>();
+        var open = new SimplePriorityQueue<T, float>();
+        open.Enqueue(start, 0f);
+        costToClosest = Single.PositiveInfinity;
+        while (open.Count > 0)
+        {
+            var top = open.First;
+            var cost = open.GetPriority(top);
+
+            if (result(top))
+            {
+                costToClosest = cost;
+                return top;
+            }
+            open.Dequeue();
+            res.Add(top);
+            foreach (var n in getNeighbors(top))
+            {
+                var edgeCost = getEdgeCost(top, n);
+                var newCost = cost + edgeCost;
+                if (open.Contains(n))
+                {
+                    var nCost = open.GetPriority(n);
+                    if (newCost < nCost)
+                    {
+                        open.UpdatePriority(n, newCost);
+                    }
+                }
+                else
+                {
+                    open.Enqueue(n, newCost);
+                }
+            }
+        }
+
+        return default;
+    }
 
     public static HashSet<T> FloodFill(T start, Func<T, IEnumerable<T>> getNeighbors,
         Func<T, T, float> getEdgeCost, float maxCost)
@@ -162,7 +203,11 @@ public static class PathFinder<T>
             var top = open.First;
             var cost = open.GetPriority(top);
             open.Dequeue();
-            res[top] = cost;
+            if (res.TryGetValue(top, out var old) == false
+                || cost < old)
+            {
+                res[top] = cost;
+            }
             foreach (var n in getNeighbors(top))
             {
                 var edgeCost = getEdgeCost(top, n);

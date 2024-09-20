@@ -16,7 +16,6 @@ public partial class SelectableControl : Panel
             descendent.MouseFilter = MouseFilterEnum.Pass;
         }
         parent.AddChild(this);
-        MouseFilter = MouseFilterEnum.Stop;
         Modulate = Colors.Red;
     }
 

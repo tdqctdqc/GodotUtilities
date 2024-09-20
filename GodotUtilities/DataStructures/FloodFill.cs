@@ -21,7 +21,6 @@ public static class FloodFill<T>
             var ns = getNeighbors(curr)
                 .Where(x => res.Contains(x) == false 
                     && valid(x));
-
             if (ns.Any() == false)
             {
                 open.Remove(curr);
@@ -43,24 +42,25 @@ public static class FloodFill<T>
         Func<T, T, float> dist)
     {
         var res = new HashSet<T> { seed };
-        var open = new HashSet<T> { seed };
+        var open = new SimplePriorityQueue<T, float>();
+        open.Enqueue(seed, dist(seed, seed));
         while (res.Count < limit)
         {
             if (open.Count == 0) break;
-            var curr = open.GetRandomElement();
+            var curr = open.Dequeue();
+            res.Add(curr);
+            
             var ns = getNeighbors(curr)
                 .Where(x => res.Contains(x) == false 
                             && valid(x));
 
-            if (ns.Any() == false)
+            foreach (var n in ns)
             {
-                open.Remove(curr);
-                continue;
+                if (open.Contains(n) == false)
+                {
+                    open.Enqueue(n, dist(seed, n));
+                }
             }
-            
-            var n = ns.MinBy(x => dist(seed, x));
-            open.Add(n);
-            res.Add(n);
         }
 
         return res;
@@ -176,40 +176,6 @@ public static class FloodFill<T>
         return default;
     }
     
-    public static Dictionary<T, List<T>> FloodFillMultiple
-    (IEnumerable<T> seeds, Func<T, IEnumerable<T>> getNs,
-        Func<T, T, float> getHeuristic,
-        HashSet<T> free)
-    {
-        var seedsQueue = new PriorityQueue<T, int>();
-        foreach (var seed in seeds)
-        {
-            seedsQueue.Enqueue(seed, 1);
-        }
-        var res = seeds.ToDictionary(s => s, 
-            s => new List<T>{s});
-
-        while (seedsQueue.Count > 0)
-        {
-            var seed = seedsQueue.Dequeue();
-            var set = res[seed];
-            var freeNs = set.SelectMany(s => getNs(s))
-                .Where(free.Contains)
-                .OrderBy(t => getHeuristic(seed, t));
-            if (freeNs.Any() == false)
-            {
-                continue;
-            }
-
-            var take = freeNs.First();
-            free.Remove(take);
-            set.Add(take);
-            seedsQueue.Enqueue(seed, set.Count);
-        }
-
-        if (free.Count > 0) throw new Exception();
-        return res;
-    }
     public static HashSet<T> GetFloodFill(T start, 
         Func<T, bool> valid,
         Func<T, IEnumerable<T>> getNeighbors)
@@ -331,6 +297,47 @@ public static class FloodFill<T>
                 queue.Enqueue(neighbor);
                 res.Add(neighbor);
                 if (unencountered.Count == 0) return res;
+            }
+        }
+
+        return res;
+    }
+
+
+    public static Dictionary<T, float> FindMinDistMap(IEnumerable<T> seeds,
+        Func<T, T, float> dist, Func<T, IEnumerable<T>> getNeighbors,
+        float maxDist = Single.PositiveInfinity)
+    {
+        var open = new SimplePriorityQueue<T, float>();
+
+        var res = new Dictionary<T, float>();
+        foreach (var seed in seeds)
+        {
+            open.Enqueue(seed, dist(seed, seed));
+        }
+
+        while (open.Count > 0)
+        {
+            var priority = open.GetPriority(open.First);
+            var curr = open.Dequeue();
+            res.Add(curr, priority);
+            foreach (var n in getNeighbors(curr))
+            {
+                if (res.ContainsKey(n)) continue;
+                var edgeCost = dist(curr, n);
+                var nCost = edgeCost + priority;
+                if (nCost >= maxDist)
+                {
+                    continue;
+                }
+                if (open.Contains(n) == false)
+                {
+                    open.Enqueue(n, nCost);
+                }
+                else if (open.GetPriority(n) > nCost)
+                {
+                    open.UpdatePriority(n, nCost);
+                }
             }
         }
 

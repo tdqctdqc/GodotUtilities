@@ -30,9 +30,9 @@ public class GameClient : Node
         Components = new Dictionary<Type, IClientComponent>();
         QueuedUpdates = new ConcurrentQueue<Action>();
         var canvas = new CanvasLayer();
+        canvas.Layer = 100;
         UiLayer = new Control();
         canvas.AddChild(UiLayer);
-        UiLayer.MouseFilter = Control.MouseFilterEnum.Pass;
         UiLayer.FocusMode = Control.FocusModeEnum.None;
         WindowHolder = new WindowHolder(this);
         
@@ -41,19 +41,12 @@ public class GameClient : Node
         AddChild(GraphicsLayer);
         var tooltip = new TooltipManager();
         AddComponent(tooltip);
-        tooltip.MouseFilter = Control.MouseFilterEnum.Pass;
         tooltip.FocusMode = Control.FocusModeEnum.None;
         UiController = new UiController();
         AddComponent(UiController);
         var frame = new UiFrame();
         AddComponent(frame);
-        frame.MouseFilter = Control.MouseFilterEnum.Pass;
         frame.FocusMode = Control.FocusModeEnum.None;
-    }
-
-    public override void _Input(InputEvent @event)
-    {
-        UiController.Mode?.HandleInput(@event);
     }
 
     public void SubmitCommand(Command c)
@@ -86,10 +79,6 @@ public class GameClient : Node
         else throw new Exception($"client couldnt handle message of type {m.GetType()}");
     }
     
-    public Guid GetPlayerGuid()
-    {
-        return default;
-    }
     public T GetComponent<T>() where T : class, IClientComponent
     {
         if (Components.ContainsKey(typeof(T)) == false) return null;

@@ -27,4 +27,12 @@ public partial class WindowHolder : Node
         AddChild(w);
         w.PopupCenteredClamped(w.Size);
     }
+    public override void _Input(InputEvent e)
+    {
+        GD.Print("window holder getting input");
+    }
+    public override void _UnhandledInput(InputEvent e)
+    {
+        GD.Print($"{GetType().Name} getting unhandled input");
+    }
 }

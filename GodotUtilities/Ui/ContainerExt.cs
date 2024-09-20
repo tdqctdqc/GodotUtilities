@@ -9,7 +9,6 @@ public static class ContainerExt
         where T : Container, new()
     {
         c.FullRect();
-        c.MouseFilter = Control.MouseFilterEnum.Stop;
         var inner = new T();
         inner.FullRect();
         c.AddChild(inner);
@@ -25,7 +24,6 @@ public static class ContainerExt
         var inner = new T();
         scroll.AddChild(inner);
         
-        c.MouseFilter = Control.MouseFilterEnum.Stop;
         c.GuiInput += e =>
         {
             s._GuiInput(e);

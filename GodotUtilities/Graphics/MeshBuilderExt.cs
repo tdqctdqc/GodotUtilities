@@ -1,4 +1,5 @@
 using Godot;
+using GodotUtilities.DataStructures.Hex;
 
 namespace GodotUtilities.Graphics;
 
@@ -42,6 +43,18 @@ public static class MeshBuilderExt
     public static void DrawHex(this MeshBuilder mb,
         Vector2 center, float radius, Color color)
     {
+        var ne = (Vector2.Up * radius).Rotated(Mathf.Pi / 6f);
+        var e = ne.Rotated(Mathf.Pi / 3f);
+        var se = e.Rotated(Mathf.Pi / 3f);
+        var sw = se.Rotated(Mathf.Pi / 3f);
+        var w = sw.Rotated(Mathf.Pi / 3f);
+        var nw = w.Rotated(Mathf.Pi / 3f);
         
+        mb.AddTri(center, center + ne, center + e, color);
+        mb.AddTri(center, center + e, center + se, color);
+        mb.AddTri(center, center + se, center + sw, color);
+        mb.AddTri(center, center + sw, center + w, color);
+        mb.AddTri(center, center + w, center + nw, color);
+        mb.AddTri(center, center + nw, center + ne, color);
     }
 }

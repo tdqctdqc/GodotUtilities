@@ -51,7 +51,6 @@ public class ItemListToken<T>
     }
     
     
-    
     public ItemListToken(
         IEnumerable<T> items, 
         Func<T, string> getLabelText, 
@@ -74,6 +73,14 @@ public class ItemListToken<T>
         {
             HandleSelection();
         };
+    }
+
+    public void SetExpand(int minEntriesVert, 
+        int minWidth,
+        int ratio = 1)
+    {
+        ItemList.CustomMinimumSize = new Vector2(minWidth, _textureHeight * minEntriesVert);
+        ItemList.ExpandFill(ratio);
     }
 
     public void Reset(IEnumerable<T> items, 

@@ -7,7 +7,7 @@ public class RefAction : IInvokable
     private Action _action;
     private HashSet<RefAction> _subscribingTo;
     private HashSet<IInvokable> _refSubscribers;
-
+        
     public RefAction()
     {
     }

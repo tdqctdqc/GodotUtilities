@@ -20,7 +20,14 @@ public partial class TooltipManager : Control, IClientComponent
         client.UiLayer.AddChild(this);
     }
 
-
+    public override void _UnhandledInput(InputEvent e)
+    {
+        GD.Print($"{GetType().Name} getting unhandled input");
+    }
+    public override void _Input(InputEvent e)
+    {
+        GD.Print($"{GetType().Name} getting input");
+    }
     public Action Disconnect { get; set; }
 
     public void Clear()

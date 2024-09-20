@@ -30,7 +30,14 @@ public partial class UiController : Node, IClientComponent
             client.GetComponent<UiFrame>().LeftBar.SetLabel(v.newVal.Name);
         });
     }
-
+    public override void _UnhandledInput(InputEvent e)
+    {
+        GD.Print("ui controller getting unhandled input");
+    }
+    public override void _Input(InputEvent e)
+    {
+        GD.Print("ui controller getting input");
+    }
     public void Process(float delta)
     {
         Mode?.Process(delta);

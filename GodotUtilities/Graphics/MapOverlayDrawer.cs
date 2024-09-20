@@ -40,15 +40,18 @@ public class MapOverlayDrawer
     {
         var label = NodeExt.CreateLabel(text);
         label.Modulate = color;
-        label.Scale = Vector2.One * scale;
         var node = new Node2D();
         node.AddChild(label);
         AddNode(node, pos);
+        label.Scale = Vector2.One * scale;
+        label.Position = -label.Size / 2f;
+        label.PivotOffset = label.Size / 2f;
     }
 
     public void AddNode(Node2D node, Vector2 pos)
     {
         node.ZIndex = _z;
+        node.ZAsRelative = false;
         node.Position = pos;
         _nodes.Add(node);
         _getParent().AddChild(node);

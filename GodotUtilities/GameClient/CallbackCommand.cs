@@ -13,12 +13,25 @@ public class CallbackCommand : Command
     public Command Inner { get; private set; }
     public int CallbackId { get; private set; }
 
+    public static CallbackCommand Redraw(Command inner, 
+        Node n, Action redraw,
+        GameClient c)
+    {
+        var id = c.Callbacks.AddCallback(() =>
+        {
+            if (GodotObject.IsInstanceValid(n))
+            {
+                redraw();
+            }
+        });
+        return new CallbackCommand(c.PlayerGuid, inner, id);
+    }
     public static CallbackCommand Construct(Command inner, 
         Action callback,
         GameClient c)
     {
         var id = c.Callbacks.AddCallback(callback);
-        return new CallbackCommand(c.GetPlayerGuid(), inner, id);
+        return new CallbackCommand(c.PlayerGuid, inner, id);
     }
     [SerializationConstructor] private CallbackCommand(
         Guid commandingPlayerGuid,

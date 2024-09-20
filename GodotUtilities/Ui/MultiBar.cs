@@ -22,11 +22,9 @@ public partial class MultiBar : Control
     public MultiBar(Container container, 
         Vector2 showingSize)
     {
-        MouseFilter = MouseFilterEnum.Pass;
         _label = new Label();
         _showingSize = showingSize;
         _container = container;
-        _container.MouseFilter = MouseFilterEnum.Pass;
         _buttons = new List<Button>();
         _group = new ButtonGroup();
         _group.AllowUnpress = true;
@@ -47,6 +45,10 @@ public partial class MultiBar : Control
         button.ButtonGroup = _group;
         _buttons.Add(button);
         _container.AddChild(button);
+    }
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        GD.Print("multi bar getting input");
     }
     public void ShowPanel(Control c)
     {
