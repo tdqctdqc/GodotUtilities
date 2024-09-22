@@ -11,21 +11,22 @@ public class DepotImporter
 {
     public Dictionary<string, object> ObjectsByName { get; private set; }
     public Dictionary<Guid, string> ObjectNamesByGuid { get; private set; }
-    public Dictionary<string, Type> ObjectTypes { get; private set; }
+    public Dictionary<string, Type> ModelInstanceTypes { get; private set; }
     public Dictionary<string, DepotModelSheet> ModelSheets { get; private set; }
-    public Dictionary<string, Type> Types { get; private set; }
+    public Dictionary<string, Type> ModelTypes { get; private set; }
     
-    public DepotImporter(string path, IEnumerable<Type> types,
+    public DepotImporter(string path, IEnumerable<Type> modelTypes,
         Models models)
     {
         path = "res://" + path;
         var json = GodotFileExt.ReadFileAsString(path);
-        Types = types.Distinct().ToDictionary(t => t.Name, t => t);
+        ModelTypes = modelTypes.Distinct()
+            .ToDictionary(t => t.Name, t => t);
         ObjectsByName = new Dictionary<string, object>();
         ObjectNamesByGuid = new Dictionary<Guid, string>();
         ModelSheets = new Dictionary<string, DepotModelSheet>();
-        ObjectTypes = new Dictionary<string, Type>();
-            
+        ModelInstanceTypes = new Dictionary<string, Type>();
+        
         MakeSheets(json);
         RegisterObjectTypes();
         MakeObjects();
@@ -70,6 +71,8 @@ public class DepotImporter
             
             var sheet = new DepotModelSheet(sheetJsonObject, this);
             ModelSheets.Add(sheet.Name, sheet);
+            
+            
         }
     }
 
@@ -95,7 +98,7 @@ public class DepotImporter
     
     private void MakeObjects()
     {
-        foreach (var (name, type) in ObjectTypes)
+        foreach (var (name, type) in ModelInstanceTypes)
         {
             var mi = GetType().GetMethod(nameof(MakeObject),
                 BindingFlags.NonPublic | BindingFlags.Instance);

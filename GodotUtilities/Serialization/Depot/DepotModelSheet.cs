@@ -19,7 +19,7 @@ public class DepotModelSheet
         DepotImporter importer)
     {
         Name = JsonSerializer.Deserialize<string>(sheet["name"]);
-        Type = importer.Types[Name];
+        Type = importer.ModelTypes[Name];
         Columns = sheet["columns"].AsArray()
             .Select(a => a.AsObject())
             .ToDictionary(
@@ -41,16 +41,16 @@ public class DepotModelSheet
         {
             var objectGuid = DepotUnpacker.UnpackGuid(line["Model"]);
             var objectName = importer.ObjectNamesByGuid[objectGuid];
-            if (importer.ObjectTypes.TryGetValue(objectName, out var oldType))
+            if (importer.ModelInstanceTypes.TryGetValue(objectName, out var oldType))
             {
                 if (oldType.IsAssignableFrom(Type))
                 {
-                    importer.ObjectTypes[objectName] = Type;
+                    importer.ModelInstanceTypes[objectName] = Type;
                 }
             }
             else
             {
-                importer.ObjectTypes.Add(objectName, Type);
+                importer.ModelInstanceTypes.Add(objectName, Type);
             }
         }
     }
@@ -81,10 +81,6 @@ public class DepotModelSheet
             fillColumnProperty.InvokeGeneric(this,
                 new[] { propertyType },
                 new[] { importer, ob, line, propertyName });
-            
-            
-
-            
         }
     }
 

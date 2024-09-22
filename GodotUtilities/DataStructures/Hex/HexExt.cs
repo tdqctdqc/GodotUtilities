@@ -12,7 +12,8 @@ public static class HexExt
     public static Vector3I South {get; private set;} = new Vector3I(0,-1,1); 
     public static Vector3I SouthWest {get; private set;} = new Vector3I(-1,0,1); 
     public static Vector3I NorthWest {get; private set;} = new Vector3I(-1,1,0);
-    
+    public static Vector2[] UnitHexTris  {get; private set;} = ShapeBuilder
+        .GetHex(Vector2.Zero, 1f).ToArray();
     public static List<Vector3I> HexDirs { get; private set; }
         = [ North, NorthEast, SouthEast, South, SouthWest, NorthWest ];
     
