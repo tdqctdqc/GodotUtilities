@@ -2,23 +2,24 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Godot;
-using GodotUtilities.GameData;
 using GodotUtilities.Reflection;
+using HexGeneral.Game.Components;
 
 namespace GodotUtilities.Serialization.Depot;
 
-public class DepotModelSheet
+public class DepotComponentSheet
 {
     public Dictionary<string, JsonObject> Columns { get; private set; }
     public Dictionary<string, string> ColumnTypeStrings { get; private set; }
     public List<JsonObject> Lines { get; private set; }
     public Type Type { get; set; }
     public string Name { get; private set; }
-    public DepotModelSheet(JsonObject sheet, 
+    
+    public DepotComponentSheet(JsonObject sheet, 
         DepotImporter importer)
     {
         Name = JsonSerializer.Deserialize<string>(sheet["name"]);
-        Type = importer.ModelTypes[Name];
+        Type = importer.ComponentTypes[Name];
         Columns = sheet["columns"].AsArray()
             .Select(a => a.AsObject())
             .ToDictionary(
@@ -33,56 +34,49 @@ public class DepotModelSheet
             Lines.Add(n.AsObject());
         }
     }
-
-    public void RegisterTypes(DepotImporter importer)
+    
+    public void MakeAndAddComponents(DepotImporter importer)
     {
         foreach (var line in Lines)
         {
-            var objectGuid = DepotUnpacker.UnpackGuid(line["Model"]);
-            var objectName = importer.ModelInstanceNamesByGuid[objectGuid];
-            if (importer.ModelInstanceTypes.TryGetValue(objectName, out var oldType))
-            {
-                if (oldType.IsAssignableFrom(Type))
-                {
-                    importer.ModelInstanceTypes[objectName] = Type;
-                }
-            }
-            else
-            {
-                importer.ModelInstanceTypes.Add(objectName, Type);
-            }
+            MakeLineComponent(importer, line);
         }
     }
-
-    public void FillAllLineProperties(DepotImporter importer)
+    
+    private T MakeComponentInstance<T>()
+        where T : IModelComponent, new()
     {
-        foreach (var line in Lines)
-        {
-            FillLineProperties(importer, line);
-        }
+        return new T();
     }
-
-    private void FillLineProperties(DepotImporter importer,
+    
+    private void MakeLineComponent(DepotImporter importer,
         JsonObject line)
     {
-        var objectGuid = DepotUnpacker.UnpackGuid(line["Model"]);
-        var objectName = importer.ModelInstanceNamesByGuid[objectGuid];
-        var modelInstance = importer.ModelInstancesByName[objectName];
+        var modelGuid = DepotUnpacker.UnpackGuid(line["Model"]);
+        var modelName = importer.ModelInstanceNamesByGuid[modelGuid];
+        var modelInstance = (IComponentedModel)importer.ModelInstancesByName[modelName];
+        var componentInstance = (IModelComponent)GetType()
+            .GetMethod(nameof(MakeComponentInstance), 
+                BindingFlags.NonPublic | BindingFlags.Instance)
+            .InvokeGeneric(this, new[] { Type }, new object[] { });
+        
+        
         var fillColumnProperty = typeof(DepotUnpacker)
             .GetMethod(nameof(DepotUnpacker.FillColumnProperty),
                 BindingFlags.Public | BindingFlags.Static);
-
+        
         foreach (var (propertyName, value) in Columns)
         {
             if (propertyName == "Model") continue;
-
-            var propertyType = Type.GetProperty(propertyName).PropertyType;
             var columnTypeString = ColumnTypeStrings[propertyName];
+            var propertyType = Type.GetProperty(propertyName).PropertyType;
             fillColumnProperty.InvokeGeneric(null,
                 new[] { propertyType },
-                new object[] { importer, modelInstance, 
+                new object[] { importer, componentInstance, 
                     line, propertyName, Type, columnTypeString, Name });
         }
+        
+        modelInstance.Components.Add(componentInstance);
     }
 
     

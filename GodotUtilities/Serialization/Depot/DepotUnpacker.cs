@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Godot;
 using GodotUtilities.DataStructures;
+using GodotUtilities.GameData;
 using GodotUtilities.Reflection;
 
 namespace GodotUtilities.Serialization.Depot;
@@ -11,7 +12,64 @@ public static class DepotUnpacker
 {
     
     
-    
+    public static void FillColumnProperty<TProperty>(
+        DepotImporter importer,
+        Object ob, JsonObject line,
+        string propertyName, 
+        Type objectType, 
+        string columnTypeString,
+        string sheetName)
+    {
+        var columnValue = line[propertyName];
+        object value = null;
+        var propertyInfo = objectType.GetProperty(propertyName);
+        var propertyType = typeof(TProperty);
+        if (propertyType == typeof(float))
+        {
+            value = DepotUnpacker.UnpackFloat(columnValue);
+        }
+        else if (propertyType == typeof(int))
+        {
+            value = DepotUnpacker.UnpackInt(columnValue);
+        }
+        else if (propertyType == typeof(string))
+        {
+            value = DepotUnpacker.UnpackString(columnValue);
+        }
+        else if (columnTypeString == "list")
+        {
+            value = DepotUnpacker.UnpackList<TProperty>(importer, propertyName, columnValue.AsArray());
+        }
+        else if (columnTypeString == "lineReference")
+        {
+            value = DepotUnpacker.UnpackLineReference<TProperty>(importer, columnValue);
+        }
+        else if (propertyType == typeof(bool))
+        {
+            value = DepotUnpacker.UnpackBool(columnValue);
+        }
+        else if (propertyType == typeof(Color))
+        {
+            var colorString = DepotUnpacker.UnpackString(columnValue);
+            value = new Color(colorString);
+        }
+        else
+        {
+            GD.Print($"couldnt unpack column type {columnTypeString} " +
+                     $"sheet {sheetName} property {propertyName}");
+            throw new Exception();
+        }
+
+        try
+        {
+            propertyInfo.SetValue(ob, value);
+        }
+        catch (Exception e)
+        {
+            GD.Print($"couldn't set {propertyName} for {objectType.Name}");
+            throw;
+        }
+    }
     
     
     
@@ -31,10 +89,10 @@ public static class DepotUnpacker
     {
         return JsonSerializer.Deserialize<float>(columnValue);
     }
-    public static object UnpackLineReference<TProperty>(DepotImporter importer, JsonNode columnValue)
+    public static Model UnpackLineReference<TProperty>(DepotImporter importer, JsonNode columnValue)
     {
-        var name = importer.ObjectNamesByGuid[UnpackGuid(columnValue)];
-        return (TProperty)importer.ObjectsByName[name];
+        var name = importer.ModelInstanceNamesByGuid[UnpackGuid(columnValue)];
+        return importer.ModelInstancesByName[name];
     }
     public static Guid UnpackGuid(JsonNode columnValue)
     {
@@ -149,8 +207,8 @@ public static class DepotUnpacker
         {
             get = a =>
             {
-                var name = importer.ObjectNamesByGuid[UnpackGuid(a)];
-                return (TValue)importer.ObjectsByName[name];
+                var name = importer.ModelInstanceNamesByGuid[UnpackGuid(a)];
+                return (TValue)((object)importer.ModelInstancesByName[name]);
             };
         }
         for (var i = 0; i < list.Count; i++)

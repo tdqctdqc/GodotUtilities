@@ -43,9 +43,10 @@ public static class ReflectionExt
                         && typeof(TAbstract).IsAssignableFrom(t))
             .ToList();
     }
-    public static List<Type> GetConcreteTypesOfType(this Assembly assembly, Type abstractType)
+    public static List<Type> GetConcreteTypesOfType(this Type abstractType,
+        IEnumerable<Type> allTypes)
     {
-        return assembly.GetTypes()
+        return allTypes
             .Where(t => t.IsConcreteType() && abstractType.IsAssignableFrom(t)).ToList();
     }
 
@@ -57,12 +58,14 @@ public static class ReflectionExt
     {
         return baseType.GetDerivedTypes(types).Where(t => t.BaseType == baseType).ToList();
     }
+
+    
     public static List<Type> GetDerivedTypes(this Type baseType, 
-        IEnumerable<Type> types)
+        IEnumerable<Type> allTypes)
     {
         // Get all types from the given assembly
         List<Type> derivedTypes = new List<Type>();
-        foreach (var type in types)
+        foreach (var type in allTypes)
         {
             if (IsSubclassOf(type, baseType))
             {

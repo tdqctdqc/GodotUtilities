@@ -4,40 +4,51 @@ using System.Text.Json.Nodes;
 using Godot;
 using GodotUtilities.GameData;
 using GodotUtilities.Reflection;
+using HexGeneral.Game.Components;
 
 namespace GodotUtilities.Serialization.Depot;
 
 public class DepotImporter
 {
-    public Dictionary<string, object> ObjectsByName { get; private set; }
-    public Dictionary<Guid, string> ObjectNamesByGuid { get; private set; }
+    public Dictionary<string, Model> ModelInstancesByName { get; private set; }
+    public Dictionary<Guid, string> ModelInstanceNamesByGuid { get; private set; }
     public Dictionary<string, Type> ModelInstanceTypes { get; private set; }
     public Dictionary<string, DepotModelSheet> ModelSheets { get; private set; }
+    public List<DepotComponentSheet> ComponentSheets { get; private set; }
     public Dictionary<string, Type> ModelTypes { get; private set; }
-    
-    public DepotImporter(string path, IEnumerable<Type> modelTypes,
+    public Dictionary<string, Type> ComponentTypes { get; private set; }
+    public DepotImporter(string path, 
+        IEnumerable<Type> modelTypes,
+        IEnumerable<Type> componentTypes,
         Models models)
     {
         path = "res://" + path;
         var json = GodotFileExt.ReadFileAsString(path);
         ModelTypes = modelTypes.Distinct()
             .ToDictionary(t => t.Name, t => t);
-        ObjectsByName = new Dictionary<string, object>();
-        ObjectNamesByGuid = new Dictionary<Guid, string>();
+        ComponentTypes = componentTypes.Distinct()
+            .ToDictionary(t => t.Name, t => t);
+
+        ModelInstancesByName = new Dictionary<string, Model>();
+        ModelInstanceNamesByGuid = new Dictionary<Guid, string>();
         ModelSheets = new Dictionary<string, DepotModelSheet>();
         ModelInstanceTypes = new Dictionary<string, Type>();
-        
+        ComponentSheets = new List<DepotComponentSheet>();
         MakeSheets(json);
         RegisterObjectTypes();
-        MakeObjects();
+        MakeModelInstances();
         foreach (var (sheetName, sheet) in ModelSheets)
         {
             sheet.FillAllLineProperties(this);
         }
+        foreach (var componentSheet in ComponentSheets)
+        {
+            componentSheet.MakeAndAddComponents(this);
+        }
 
         var modelNameProperty = typeof(Model)
             .GetProperty(nameof(Model.Name));
-        foreach (var (name, ob) in ObjectsByName)
+        foreach (var (name, ob) in ModelInstancesByName)
         {
             var modelName = name.Split("_").Last();
             modelNameProperty.SetValue(ob, modelName);
@@ -50,7 +61,6 @@ public class DepotImporter
         var top = JsonSerializer
             .Deserialize<JsonObject>(json);
         var sheets = top["sheets"].AsArray();
-        
         
         foreach (var n in sheets)
         {
@@ -68,9 +78,24 @@ public class DepotImporter
             {
                 continue;
             }
+
+            var sheetName = JsonSerializer.Deserialize<string>(n["name"]);
+
+            if (ModelTypes.ContainsKey(sheetName))
+            {
+                var sheet = new DepotModelSheet(sheetJsonObject, this);
+                ModelSheets.Add(sheet.Name, sheet);
+            }
+            else if (ComponentTypes.ContainsKey(sheetName))
+            {
+                var sheet = new DepotComponentSheet(sheetJsonObject, this);
+                ComponentSheets.Add(sheet);
+            }
+            else
+            {
+                throw new Exception();
+            }
             
-            var sheet = new DepotModelSheet(sheetJsonObject, this);
-            ModelSheets.Add(sheet.Name, sheet);
             
             
         }
@@ -83,7 +108,7 @@ public class DepotImporter
         {
             var name = DepotUnpacker.UnpackString(line["Name"]);
             var guid = DepotUnpacker.UnpackGuid(line["guid"]);
-            ObjectNamesByGuid.Add(guid, name);
+            ModelInstanceNamesByGuid.Add(guid, name);
         }
     }
 
@@ -96,21 +121,21 @@ public class DepotImporter
     }
     
     
-    private void MakeObjects()
+    private void MakeModelInstances()
     {
         foreach (var (name, type) in ModelInstanceTypes)
         {
-            var mi = GetType().GetMethod(nameof(MakeObject),
+            var mi = GetType().GetMethod(nameof(MakeModelInstance),
                 BindingFlags.NonPublic | BindingFlags.Instance);
             mi.InvokeGeneric(this, new[] { type },
                     new object[] { name });
         }
     }
 
-    private void MakeObject<T>(string name)
-        where T : new()
+    private void MakeModelInstance<T>(string name)
+        where T : Model, new()
     {
         var ob = new T();
-        ObjectsByName.Add(name, ob);
+        ModelInstancesByName.Add(name, ob);
     }
 }
