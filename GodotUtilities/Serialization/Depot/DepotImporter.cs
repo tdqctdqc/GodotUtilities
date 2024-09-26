@@ -4,7 +4,6 @@ using System.Text.Json.Nodes;
 using Godot;
 using GodotUtilities.GameData;
 using GodotUtilities.Reflection;
-using HexGeneral.Game.Components;
 
 namespace GodotUtilities.Serialization.Depot;
 
@@ -80,7 +79,7 @@ public class DepotImporter
             }
 
             var sheetName = JsonSerializer.Deserialize<string>(n["name"]);
-
+            
             if (ModelTypes.ContainsKey(sheetName))
             {
                 var sheet = new DepotModelSheet(sheetJsonObject, this);

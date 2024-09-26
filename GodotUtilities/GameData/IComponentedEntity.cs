@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 
-namespace HexGeneral.Game.Components;
+namespace GodotUtilities.GameData;
 
 public interface IComponentedEntity 
 {
+    int Id { get; }
     EntityComponentHolder Components { get; }
 }

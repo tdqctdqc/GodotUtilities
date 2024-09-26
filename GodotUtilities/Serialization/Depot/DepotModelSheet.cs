@@ -75,8 +75,15 @@ public class DepotModelSheet
         foreach (var (propertyName, value) in Columns)
         {
             if (propertyName == "Model") continue;
-
-            var propertyType = Type.GetProperty(propertyName).PropertyType;
+            Type propertyType;
+            try
+            {
+                propertyType = Type.GetProperty(propertyName).PropertyType;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"couldnt find property {propertyName} in {Type.Name}");
+            }
             var columnTypeString = ColumnTypeStrings[propertyName];
             fillColumnProperty.InvokeGeneric(null,
                 new[] { propertyType },

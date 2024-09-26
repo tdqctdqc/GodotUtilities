@@ -2,8 +2,8 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Godot;
+using GodotUtilities.GameData;
 using GodotUtilities.Reflection;
-using HexGeneral.Game.Components;
 
 namespace GodotUtilities.Serialization.Depot;
 

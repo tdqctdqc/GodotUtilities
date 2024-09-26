@@ -1,4 +1,5 @@
-namespace HexGeneral.Game.Components;
+namespace GodotUtilities.GameData;
+
 
 public interface IModelComponent
 {
