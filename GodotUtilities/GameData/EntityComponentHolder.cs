@@ -75,7 +75,8 @@ public class EntityComponentHolder
     public T Get<T>(Data data) where T : IEntityComponent
     {
         return Components.OfType<T>()
-            .Concat(GetModels(data).SelectMany(m => m.Components.OfType<T>()))
+            .Concat(GetModels(data)
+                .SelectMany(m => m.Components.OfType<T>()))
             .FirstOrDefault();
     }
 
@@ -86,9 +87,11 @@ public class EntityComponentHolder
             .Concat(GetModels(data).SelectMany(m => m.Components.OfType<T>()));
     }
 
-    public IEnumerable<IEntityComponent> All(Data data)
+    public IEnumerable<IComponent> All(Data data)
     {
         return Components
-            .Concat(GetModels(data).SelectMany(m => m.Components.OfType<IEntityComponent>()));
+            .AsEnumerable<IComponent>()
+            .Concat(GetModels(data)
+                .SelectMany(m => m.Components.Components));
     }
 }

@@ -1,7 +1,8 @@
+using Godot;
+
 namespace GodotUtilities.GameData;
 
 
-public interface IModelComponent
+public interface IModelComponent : IComponent
 {
-    
 }

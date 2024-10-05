@@ -138,6 +138,7 @@ public static class PathFinder<T>
             {
                 var edgeCost = getEdgeCost(top, n);
                 var newCost = cost + edgeCost;
+                if (float.IsPositiveInfinity(newCost)) continue;
                 if (open.Contains(n))
                 {
                     var nCost = open.GetPriority(n);

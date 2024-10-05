@@ -92,7 +92,7 @@ public class DepotImporter
             }
             else
             {
-                throw new Exception();
+                throw new Exception("couldnt find component or model for " + sheetName);
             }
             
             

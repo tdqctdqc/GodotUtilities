@@ -7,6 +7,7 @@ public abstract class MouseAction : IMouseAction
     protected abstract void MouseDown(InputEventMouse m);
     protected abstract void MouseHeld(InputEventMouse m);
     protected abstract void MouseUp(InputEventMouse m);
+    public abstract void Clear();
     private MouseButtonMask _button;
     private bool _mouseDown;
     private MouseAuxButton _aux;

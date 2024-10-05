@@ -4,9 +4,8 @@ using GodotUtilities.Logic;
 
 namespace GodotUtilities.GameData;
 
-public interface IEntityComponent
+public interface IEntityComponent : IComponent
 {
-    Control GetDisplay(GameClient.GameClient client);
     void TurnTick(ProcedureKey key);
     void Added(EntityComponentHolder holder, Data data);
     void Removed(EntityComponentHolder holder, Data data);

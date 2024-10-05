@@ -17,4 +17,12 @@ public class MouseMode
             action.Process(m);
         }
     }
+
+    public void Clear()
+    {
+        foreach (var a in Actions)
+        {
+            a.Clear();
+        }
+    }
 }
