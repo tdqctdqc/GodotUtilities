@@ -17,6 +17,7 @@ public class Data(IdDispenser idDispenser, Entities entities,
     public Dictionary<Type, object> Singletons { get; private set; } = singletons;
     public Serializer Serializer { get; private set; } = serializer;
     public RandomNumberGenerator Random { get; private set; } = random;
+    public Logger.Logger Logger { get; protected set; }
 
     public static void SetupForHost(Data d, ModelImporter modelImporter)
     {
