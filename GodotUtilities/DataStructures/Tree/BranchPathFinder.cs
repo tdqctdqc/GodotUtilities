@@ -58,9 +58,9 @@ public class BranchPathFinder<T>
         var key = from.GetIdEdgeKey(to);
         var reverse = to.Id < from.Id;
 
-        if (CachedPaths.ContainsKey(key))
+        if (CachedPaths.TryGetValue(key, out var cachedPath))
         {
-            return reverse ? CachedReversePaths[key] : CachedPaths[key];
+            return reverse ? CachedReversePaths[key] : cachedPath;
         }
         
         var (lo, hi) = reverse ? (to, from) : (from, to);

@@ -10,7 +10,7 @@ namespace GodotUtilities.GameClient;
 public class GameClient : Node
 {
     public Guid PlayerGuid { get; private set; }
-    protected ILogic _logic;
+    public ILogic Logic { get; private set; }
     public ClientCallbacks Callbacks { get; private set; }
     public Control UiLayer { get; private set; }
     public Dictionary<Type, IClientComponent> Components { get; private set; }
@@ -22,8 +22,8 @@ public class GameClient : Node
     public WindowHolder WindowHolder { get; private set; }
     public GameClient(ILogic logic, Guid playerGuid)
     {
-        _logic = logic;
-        _logic.MessageForLocalClient += HandleMessageForClient;
+        Logic = logic;
+        Logic.MessageForLocalClient += HandleMessageForClient;
         PlayerGuid = playerGuid;
         UiTick = new RefAction();
         _uiTickTimer = new TimerAction(.1f, 0f, UiTick.Invoke);
@@ -53,11 +53,11 @@ public class GameClient : Node
     public void SubmitCommand(Command c)
     {
         c.SetCommandingPlayer(PlayerGuid);
-        _logic.HandleMessageFromClient(c);
+        Logic.HandleMessageFromClient(c);
     }
     public override void _Process(double delta)
     {
-        _logic.Process(delta);
+        Logic.Process(delta);
         _uiTickTimer.Process(delta);
         var values = Components.Values.ToList();
         

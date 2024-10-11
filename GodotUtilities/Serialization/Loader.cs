@@ -9,9 +9,8 @@ public class Loader<T>
 {
     public static T Load(string path, Serializer serializer)
     {
-        var fileAccess = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+        using var fileAccess = FileAccess.Open(path, FileAccess.ModeFlags.Read);
         var bytes = fileAccess.GetBuffer((long)fileAccess.GetLength());
-        fileAccess.Close();
         return serializer.Deserialize<T>(bytes);
     }
     

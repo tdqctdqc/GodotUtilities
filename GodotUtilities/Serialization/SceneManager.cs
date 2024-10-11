@@ -25,5 +25,4 @@ public static class SceneManager
     {
         return Scenes[typeof(T).Name].Instantiate<T>();
     }
-    
 }

@@ -2,7 +2,8 @@ using Godot;
 
 namespace GodotUtilities.GameData;
 
-public class ModelIdRegister(int id, Dictionary<int, string> namesById, Dictionary<string, int> idsByName) : Entity(id)
+public class ModelIdRegister(int id, Dictionary<int, string> namesById, Dictionary<string, int> idsByName) 
+    : Entity(id), ISingletonEntity
 {
     public Dictionary<int, string> NamesById { get; private set; } = namesById;
     public Dictionary<string, int> IdsByName { get; private set; } = idsByName;
@@ -15,7 +16,6 @@ public class ModelIdRegister(int id, Dictionary<int, string> namesById, Dictiona
     }
     public override void Made(Data d)
     {
-        d.SetEntitySingleton<ModelIdRegister>();
     }
 
     public override void CleanUp(Data d)

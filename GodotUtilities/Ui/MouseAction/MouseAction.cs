@@ -39,6 +39,12 @@ public abstract class MouseAction : IMouseAction
             _mouseDown = true;
             MouseDown(m);
         }
+        ProcessSub(m);
+    }
+
+    protected virtual void ProcessSub(InputEventMouse m)
+    {
+        
     }
 
     protected void DoAction()

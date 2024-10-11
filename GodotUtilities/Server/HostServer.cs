@@ -5,7 +5,7 @@ using GodotUtilities.Logic;
 
 namespace GodotUtilities.Server;
 
-public  partial class HostServer : Node
+public partial class HostServer : Node
 {
     private ILogic _logic;
     private Entities _entities;

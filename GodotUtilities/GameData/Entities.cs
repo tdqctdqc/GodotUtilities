@@ -24,6 +24,11 @@ public class Entities
                      $"with {e.GetType().ToString()}");
         }
         EntitiesById.Add(e.Id, e);
+        if (e is ISingletonEntity s)
+        {
+            d.SetSingleton(e);
+        }
+
         e.Made(d);
     }
     public void RemoveEntity(int eId, Data d)
