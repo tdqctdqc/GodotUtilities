@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "U38qDAhRnHY=",
+  "dgSpecHash": "AEuZM1IE14MSo9lTDuVQXoWk1x05egpXOl+BXl6hp5cCSig3jlxeKy9Z0D1CodBKTMFJyTHQc9Alx0Nq1vWDnQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Me\\Desktop\\games\\GodotUtilities\\GodotUtilities\\GodotUtilities.csproj",
   "expectedPackageFiles": [
@@ -26,6 +26,16 @@
     "C:\\Users\\Me\\.nuget\\packages\\webactivatorex\\2.0.2\\webactivatorex.2.0.2.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'MessagePack' 3.0.134-beta has a known moderate severity vulnerability, https://github.com/advisories/GHSA-4qm4-8hg2-g2xm",
+      "libraryId": "MessagePack",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
     {
       "code": "NU1701",
       "level": "Warning",
