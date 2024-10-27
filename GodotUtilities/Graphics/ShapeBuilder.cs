@@ -38,7 +38,6 @@ public static class ShapeBuilder
     public static IEnumerable<Vector2> GetHexBorder(Vector3I coords, 
         Vector3I dir, float radius, float thickness)
     {
-        var angle = coords.GetHexAngle(coords + dir);
         var worldPos = coords.GetWorldPos();
         var nWorldPos = (dir + coords).GetWorldPos();
         var worldDir = (nWorldPos - worldPos).Normalized() * radius;

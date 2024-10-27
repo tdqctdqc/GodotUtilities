@@ -5,6 +5,7 @@ namespace GodotUtilities.Graphics;
 
 public static class MeshBuilderExt
 {
+    
     public static void DrawBox(this MeshBuilder mb,
         Vector2 topLeft, Vector2 bottomRight, Color color,
         float thickness)
@@ -56,5 +57,24 @@ public static class MeshBuilderExt
         mb.AddTri(center, center + sw, center + w, color);
         mb.AddTri(center, center + w, center + nw, color);
         mb.AddTri(center, center + nw, center + ne, color);
+    }
+
+    public static void DrawHexBorder(this MeshBuilder mb, Vector3I hex, Vector3I nHex,
+        Color color)
+    {
+        var dir = nHex - hex;
+        var angle = -HexExt.HexDirs.IndexOf(dir) * (Mathf.Pi / 3f);
+
+        var pos = hex.GetWorldPos();
+        
+        
+        
+        for (var i = 0; i < HexExt.HexBorderShape.Length; i+=3)
+        {
+            var a = HexExt.HexBorderShape[i].Rotated(angle) + pos;
+            var b = HexExt.HexBorderShape[i + 1].Rotated(angle) + pos;
+            var c = HexExt.HexBorderShape[i + 2].Rotated(angle) + pos;
+            mb.AddTri(a,b,c,color);
+        }
     }
 }

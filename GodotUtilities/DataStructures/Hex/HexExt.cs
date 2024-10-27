@@ -22,7 +22,12 @@ public static class HexExt
             Vector2.Up.Rotated(5f * Mathf.Pi / 6f), Vector2.Up.Rotated(7f * Mathf.Pi / 6f),
             Vector2.Up.Rotated(9f * Mathf.Pi / 6f), Vector2.Up.Rotated(11f * Mathf.Pi / 6f), ];
 
-    
+    public static Vector2[] HexBorderShape { get; private set; }
+        = ShapeBuilder
+            .GetHexBorder(Vector3I.Zero, HexExt.North,
+            1f, .2f)
+            .Select(p => p + HexExt.HexHeight * Vector2.Up).ToArray();
+
 
     public static IEnumerable<Vector3I> GetNeighbors(
         this Vector3I hex)
@@ -84,11 +89,8 @@ public static class HexExt
     }
     public static float GetHexAngle(this Vector3I h1, Vector3I h2)
     {
-        var p1 = GetWorldPos(
-            CubeToGridCoords(h1));
-        var p2 = GetWorldPos(
-            CubeToGridCoords(h2));
-        return .5f * Mathf.Pi - (p2 - p1).AngleTo(Vector2.Up);
+        var dir = h2 - h1;
+        return HexDirs.IndexOf(dir) * (Mathf.Pi / 3f);
     }
     public static int GetHexDistance(this Vector3I h1, Vector3I h2)
     {
