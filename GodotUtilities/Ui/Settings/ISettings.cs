@@ -26,7 +26,7 @@ public static class SettingsExt
         this Node2D graphic, string name = "Transparency")
     {
         var setting = new FloatSettingsOption(name,
-            1f, .1f, 1f, .1f, false);
+            1f, 0f, 1f, .1f, false);
         setting.SettingChanged.SubscribeForNode(v =>
         {
             graphic.Modulate = new Color(1f, 1f, 1f, v.newVal);

@@ -15,7 +15,7 @@
       <PackageReference Include="LightObjectPool" Version="1.0.1" />
       <PackageReference Include="MessagePack" Version="3.0.134-beta" />
       <PackageReference Include="OptimizedPriorityQueue" Version="5.1.0" />
-      <PackageReference Include="Poly2Tri" Version="1.0.1" />
+      <PackageReference Include="Poly2Tri.dll" Version="1.0.4" />
     </ItemGroup>
 
 </Project>

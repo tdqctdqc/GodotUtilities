@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "AEuZM1IE14MSo9lTDuVQXoWk1x05egpXOl+BXl6hp5cCSig3jlxeKy9Z0D1CodBKTMFJyTHQc9Alx0Nq1vWDnQ==",
+  "dgSpecHash": "CkhPXouoGRo=",
   "success": true,
   "projectFilePath": "C:\\Users\\Me\\Desktop\\games\\GodotUtilities\\GodotUtilities\\GodotUtilities.csproj",
   "expectedPackageFiles": [
@@ -22,7 +22,7 @@
     "C:\\Users\\Me\\.nuget\\packages\\microsoft.net.stringtools\\17.10.4\\microsoft.net.stringtools.17.10.4.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\microsoft.web.infrastructure\\1.0.0\\microsoft.web.infrastructure.1.0.0.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\optimizedpriorityqueue\\5.1.0\\optimizedpriorityqueue.5.1.0.nupkg.sha512",
-    "C:\\Users\\Me\\.nuget\\packages\\poly2tri\\1.0.1\\poly2tri.1.0.1.nupkg.sha512",
+    "C:\\Users\\Me\\.nuget\\packages\\poly2tri.dll\\1.0.4\\poly2tri.dll.1.0.4.nupkg.sha512",
     "C:\\Users\\Me\\.nuget\\packages\\webactivatorex\\2.0.2\\webactivatorex.2.0.2.nupkg.sha512"
   ],
   "logs": [
@@ -60,8 +60,8 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Poly2Tri 1.0.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Poly2Tri",
+      "message": "Package 'Poly2Tri.dll 1.0.4' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Poly2Tri.dll",
       "targetGraphs": [
         "net8.0"
       ]

@@ -57,13 +57,21 @@ public static Color GetRainbowColor(int index)
             _rand.RandfRange(0f, 1f)
         );
     }
-
+        
     public static Color GetPeriodicShade(this Color color, int iter)
     {
         return color.Darkened((iter % 7) / 7f);
     }
 
-public static Color GetColor(int index)
+    public static Color GetRandomShade(this Color color, float min, float max)
+    {
+        var sample = min + Random.Shared.NextSingle() * (max - min);
+        var mid = min + (max - min) / 2f;
+        var diff = sample - mid;
+        return color.Darkened(diff);
+    }
+
+    public static Color GetColor(int index)
     {
         return ColorList[index % ColorList.Count];
     }

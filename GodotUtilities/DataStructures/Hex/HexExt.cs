@@ -90,7 +90,7 @@ public static class HexExt
     public static float GetHexAngle(this Vector3I h1, Vector3I h2)
     {
         var dir = h2 - h1;
-        return HexDirs.IndexOf(dir) * (Mathf.Pi / 3f);
+        return -HexDirs.IndexOf(dir) * (Mathf.Pi / 3f);
     }
     public static int GetHexDistance(this Vector3I h1, Vector3I h2)
     {

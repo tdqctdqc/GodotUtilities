@@ -1,6 +1,5 @@
 using Godot;
-using Poly2Tri.Triangulation.Delaunay.Sweep;
-using Poly2Tri.Triangulation.Polygon;
+using Poly2Tri;
 
 namespace GodotUtilities.Graphics;
 
@@ -72,21 +71,20 @@ public class MeshBuilder
             -insetThickness);
         foreach (var inset in insets)
         {
-            var poly = new Poly2Tri.Triangulation.Polygon.Polygon(
+            var poly = new Polygon(
                 inset.Select(v => new PolygonPoint(v.X, v.Y)));
-            var ctx = new DTSweepContext();
 
             var inners = Geometry2D.OffsetPolygon(
                 inset, -borderThickness);
             foreach (var inner in inners)
             {
                 this.DrawPolygon(inner, innerColor);
-                var hole = new Poly2Tri.Triangulation.Polygon.Polygon(
+                var hole = new Polygon(
                     inner.Select(v => new PolygonPoint(v.X, v.Y)));
                 poly.AddHole(hole);
             }
 
-            Poly2Tri.P2T.Triangulate(poly.Yield());
+            Poly2Tri.P2T.Triangulate(poly);
 
             foreach (var tri in poly.Triangles)
             {

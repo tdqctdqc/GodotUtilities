@@ -10,25 +10,20 @@ public class TwoWay<T, R>
         RsByT = rsByT;
     }
 
-    public void AddOrUpdate(T t, IEnumerable<R> elements)
+    
+    
+    public void AddOrUpdate(T t, R r)
     {
-        var rHash = elements.ToHashSet();
-        if (RsByT.TryGetValue(t, out var oldRs))
+        if (RsByT.ContainsKey(t) == false)
         {
-            var newRs = rHash.Except(oldRs);
-            var obsolete = oldRs.Except(rHash);
-            foreach (var newR in newRs)
-            {
-                AddTToR(t, newR);
-            }
-
-            foreach (var obsoleteR in obsolete)
-            {
-                RemoveTFromR(t, obsoleteR);
-            }
+            RsByT.Add(t, new HashSet<R>());
         }
-
-        RsByT[t] = rHash;
+        if (TsByR.ContainsKey(r) == false)
+        {
+            TsByR.Add(r, new HashSet<T>());
+        }
+        RsByT[t].Add(r);
+        TsByR[r].Add(t);
     }
 
     public void Remove(T t)

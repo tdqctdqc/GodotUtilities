@@ -2,8 +2,6 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Poly2Tri.Triangulation.Polygon;
-using Poly2Tri.Utility;
 
 public static class GeometryExt
 {

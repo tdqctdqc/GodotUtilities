@@ -43,7 +43,8 @@ public static class MathExt
         if (i == 0) return 0;
         return (int)Math.Floor((float)Math.Log10(i)) + 1;
     }
-    public static float ProjectToRange(this float val, float range, float resultFloor, float cutoff)
+    public static float ProjectToRange(this float val, 
+        float range, float resultFloor, float cutoff)
     {
         return (val - cutoff) * (range - resultFloor) + resultFloor;
     }

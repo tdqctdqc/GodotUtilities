@@ -62,9 +62,7 @@ public static class MeshBuilderExt
     public static void DrawHexBorder(this MeshBuilder mb, Vector3I hex, Vector3I nHex,
         Color color)
     {
-        var dir = nHex - hex;
-        var angle = -HexExt.HexDirs.IndexOf(dir) * (Mathf.Pi / 3f);
-
+        var angle = hex.GetHexAngle(nHex);
         var pos = hex.GetWorldPos();
         
         

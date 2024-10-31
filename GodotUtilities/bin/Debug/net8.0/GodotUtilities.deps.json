@@ -16,7 +16,7 @@
           "LightObjectPool": "1.0.1",
           "MessagePack": "3.0.134-beta",
           "OptimizedPriorityQueue": "5.1.0",
-          "Poly2Tri": "1.0.1"
+          "Poly2Tri.dll": "1.0.4"
         },
         "runtime": {
           "GodotUtilities.dll": {}
@@ -200,11 +200,11 @@
           }
         }
       },
-      "Poly2Tri/1.0.1": {
+      "Poly2Tri.dll/1.0.4": {
         "runtime": {
-          "lib/net35-Client/Poly2Tri.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+          "lib/Net35/Poly2Tri.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       },
@@ -353,12 +353,12 @@
       "path": "optimizedpriorityqueue/5.1.0",
       "hashPath": "optimizedpriorityqueue.5.1.0.nupkg.sha512"
     },
-    "Poly2Tri/1.0.1": {
+    "Poly2Tri.dll/1.0.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-+/V/DLKkJov+Lc83QE2aRAMqxl+cE6sjhMZ1kdfj1l7B/r0fPcBeLj5uU4sxrKkZVVN+j4JUNf6e2xW5vrhwqQ==",
-      "path": "poly2tri/1.0.1",
-      "hashPath": "poly2tri.1.0.1.nupkg.sha512"
+      "sha512": "sha512-gXkBK80c5phmJ9raBq+rFTLnJFAyZnGPGyFISOPgN1luGp/PMtbHcd8OqDA+ww1uGxBlUUYbm1pAOD9IEgdXtA==",
+      "path": "poly2tri.dll/1.0.4",
+      "hashPath": "poly2tri.dll.1.0.4.nupkg.sha512"
     },
     "WebActivatorEx/2.0.2": {
       "type": "package",

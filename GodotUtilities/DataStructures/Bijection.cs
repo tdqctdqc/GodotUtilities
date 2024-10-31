@@ -6,7 +6,8 @@ public class Bijection<T1, T2>
     public T1 this[T2 t2] => _dic2[t2];
     private Dictionary<T1, T2> _dic1;
     private Dictionary<T2, T1> _dic2;
-    public IEnumerable<T2> Values => _dic1.Values;
+    public IEnumerable<T2> Values2 => _dic1.Values;
+    public IEnumerable<T1> Values1 => _dic1.Keys;
     public Bijection()
     {
         _dic1 = new Dictionary<T1, T2>();
