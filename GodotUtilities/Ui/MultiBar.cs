@@ -46,10 +46,6 @@ public partial class MultiBar : Control
         _buttons.Add(button);
         _container.AddChild(button);
     }
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        GD.Print("multi bar getting input");
-    }
     public void ShowPanel(Control c)
     {
         HidePanel();

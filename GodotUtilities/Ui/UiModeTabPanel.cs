@@ -12,6 +12,7 @@ public partial class UiModeTabPanel : TabContainer
     private List<Func<bool>> _tabEnable;
     private List<Action> _tabDraw;
 
+    
     public UiModeTabPanel(UiMode mode, MouseMode noTabMode = null)
     {
         _mode = mode;
@@ -76,6 +77,10 @@ public partial class UiModeTabPanel : TabContainer
             {
                 SetTabDisabled(index, true);
                 _tabs[i].ClearChildren();
+            }
+            else
+            {
+                SetTabDisabled(index, false);
             }
         }
     }

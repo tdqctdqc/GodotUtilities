@@ -8,7 +8,7 @@ namespace GodotUtilities.GameData;
 
 public class EntityComponentHolder
 {
-    public List<IEntityComponent> Components { get; private set; }
+    public List<IEntityComponent> EntityComponents { get; private set; }
     public List<ModelIdRef<Model>> Models { get; private set; } 
     public void Initialize(
         IComponentedEntity entity,
@@ -33,16 +33,16 @@ public class EntityComponentHolder
     }
 
     [SerializationConstructor] private EntityComponentHolder(
-        List<IEntityComponent> components, 
+        List<IEntityComponent> entityComponents, 
         List<ModelIdRef<Model>> models)
     {
-        Components = components;
+        EntityComponents = entityComponents;
         Models = models;
     }
     
     public void Add(IEntityComponent c, Data data)
     {
-        Components.Add(c);
+        EntityComponents.Add(c);
         c.Added(this, data);
     }
 
@@ -57,7 +57,7 @@ public class EntityComponentHolder
     }
     public void Remove(IEntityComponent c, Data data)
     {
-        Components.Remove(c);
+        EntityComponents.Remove(c);
         c.Removed(this, data);
     }
 
@@ -67,29 +67,26 @@ public class EntityComponentHolder
     }
     public void TurnTick(ProcedureKey key)
     {
-        foreach (var component in Components)
+        foreach (var component in EntityComponents)
         {
             component.TurnTick(key);
         }
     }
     public T Get<T>(Data data) where T : IEntityComponent
     {
-        return Components.OfType<T>()
-            .Concat(GetModels(data)
-                .SelectMany(m => m.Components.OfType<T>()))
-            .FirstOrDefault();
+        return All(data).OfType<T>().FirstOrDefault();
     }
 
 
     public IEnumerable<T> OfType<T>(Data data) where T : IEntityComponent
     {
-        return Components.OfType<T>()
+        return EntityComponents.OfType<T>()
             .Concat(GetModels(data).SelectMany(m => m.Components.OfType<T>()));
     }
 
     public IEnumerable<IComponent> All(Data data)
     {
-        return Components
+        return EntityComponents
             .AsEnumerable<IComponent>()
             .Concat(GetModels(data)
                 .SelectMany(m => m.Components.Components));
